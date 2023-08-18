@@ -5,8 +5,8 @@ import NotFound from "../pages/NotFound/NotFound";
 import Login from "../pages/login/Login";
 
 const routes = [
-  { path: "/", element: <Dashboard /> },
-  { path: "/login", element: <Login /> },
+  { path: "/dashboard", element: <Dashboard /> },
+  { path: "/", element: <Login /> },
   { path: "*", element: <NotFound /> },
 ];
 
