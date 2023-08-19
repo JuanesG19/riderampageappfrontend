@@ -1,7 +1,6 @@
 import React from "react";
-import jwt_decode from "jwt-decode";
 import { Route, Navigate, Routes } from "react-router-dom";
-import Cookies from "js-cookie";
+import Cookies from "universal-cookie";
 
 const GuardedRoute = ({
   path,
@@ -9,39 +8,30 @@ const GuardedRoute = ({
   protected: isProtected,
   ...props
 }) => {
- /*  const loginTime = Cookies.get("loginTime");
+  const cookies = new Cookies();
+
+  /* Validar el tiempo de loggeo */
+  const loginTime = cookies.get("loginTime");
   const twentyFourHours = 24 * 60 * 60 * 1000;
   const currentTime = new Date().getTime();
 
   if (currentTime - loginTime >= twentyFourHours) {
-    Cookies.remove("username");
-    Cookies.remove("jwt");
-    Cookies.remove("loginTime");
+    cookies.remove("username");
+    cookies.remove("loginTime");
   }
 
-  const jwt = Cookies.get("jwt");
-  const user = Cookies.get("username");
+  const user = cookies.get("username");
 
-  if (jwt) {
-    const decodedToken = jwt_decode(jwt);
-    const jwtUser = decodedToken.sub;
-
-    if (user == jwtUser) {
-      return (
-        // Si el usuario está autenticado, redirige a la ruta especificada
-        <Routes>
-          <Route path="/" element={Element} />
-        </Routes>
-      );
-    } else {
-      window.alert("Error Autenticación");
-      return <Navigate to="/adminLogin" replace />;
-    }
+  if (user) {
+    return (
+      <Routes>
+        <Route path="/" element={Element} />
+      </Routes>
+    );
   } else {
-    // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-    window.alert("Debes loguearte para acceder a este link");
-    return <Navigate to="/adminLogin" replace />;
-  } */
+    window.alert("Debes Loggearte Para Acceder A Este Lugar");
+    return <Navigate to="/login" replace />;
+  }
 };
 
 export default GuardedRoute;

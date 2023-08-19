@@ -10,20 +10,44 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import image from '../../utils/images/Logo.png';
-import bmxLogin from '../../utils/images/bmxLogin.jpg';
+import './styles.css';
+import { loginAuthentication } from '../../api/LoginService';
+import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie"
 
 
 const defaultTheme = createTheme();
 
 export default function Login() {
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    try {
+      const response = await loginAuthentication(data);
+
+      console.log(response);
+
+      if (response === true) {
+        const cookies = new Cookies();
+
+        cookies.set("username", data.get('username'), { path: '/' });
+        cookies.set("loginTime", new Date().getTime(), { path: '/' });
+
+        setTimeout(navigate("/createTournament"), 9000);
+        setTimeout(window.location.reload(), 1000);
+      } else {
+        window.alert("Usuario o contraseña incorrecta")
+        setTimeout(window.location.reload(), 1000);
+      }
+    } catch (err) {
+      window.alert("Usuario o contraseña incorrecta")
+      setTimeout(window.location.reload(), 1000);
+    }
   };
 
   return (
@@ -60,21 +84,22 @@ export default function Login() {
             <Avatar
               alt="RideRampage"
               src={image}
-              sx={{ width: 120, height: 120, mb: 4 }}
+              sx={{ width: 150, height: 150, mb: 3 }}
             />
-            <Typography component="h1" variant="h5" sx={{fontWeight: 'bold'}}>
-              INGRESA
+            <Typography component="h1" variant="h5" className='title' align="center">
+              SECCIÓN DE ADMINISTRADORES
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="username"
                 label="Usuario"
-                name="email"
-                autoComplete="email"
+                name="username"
+                autoComplete="username"
                 autoFocus
+                className="custom-textfield"
               />
               <TextField
                 margin="normal"
@@ -85,6 +110,7 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                className="custom-textfield"
               />
 
               <Button
@@ -92,6 +118,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                className="button"
               >
                 Ingresar
               </Button>

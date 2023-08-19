@@ -1,7 +1,22 @@
 import React, { useState } from "react";
-import "./styles.css";
+import Button from '@mui/material/Button';
 import Navbar from "../../components/navbar/Navbar";
+import { Link } from "react-router-dom";
 
 
-function Dashboard() { return (<><Navbar /><p>Hola</p></>); }
+import "./styles.css";
+
+
+function Dashboard() {
+  return (<>
+    <Navbar />
+    <div >
+      <Link to="/login" > 
+        <Button variant="contained" color="primary" sx={{mt: 2}}>
+          Login
+        </Button>
+      </Link>
+    </div>
+  </>);
+}
 export default Dashboard;
