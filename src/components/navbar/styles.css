@@ -1,0 +1,4 @@
+.AppBar {
+  background: rgb(255, 137, 94);
+  background: linear-gradient(0deg, rgba(255, 137, 94, 1) 0%, rgba(255, 68, 0, 1) 100%);
+}

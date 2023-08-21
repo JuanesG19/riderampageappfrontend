@@ -1,0 +1,19 @@
+.fullscreen-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 12vh;
+  background-color: #f0f0f0;
+}
+
+.text {
+  text-align: center;
+  font-size: 3rem;
+}
+
+@media (max-width: 600px) {
+  .text {
+    font-size: 2rem;
+  }
+}
