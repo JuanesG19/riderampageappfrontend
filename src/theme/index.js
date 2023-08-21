@@ -1,7 +1,5 @@
 import {createTheme}  from '@mui/material/styles';
 import { colors } from '@mui/material';
-import shadows from './shadows';
-import typography from './typography';
 
 const theme = createTheme({
   palette: {
@@ -32,8 +30,6 @@ const theme = createTheme({
     },
     
   },
-  shadows,
-  typography
 });
 
 export default theme;

@@ -3,10 +3,11 @@ import Button from '@mui/material/Button';
 import Navbar from "../../components/navbar/Navbar";
 import Paper from '@mui/material/Paper';
 import { Link } from "react-router-dom";
-
-
 import "./styles.css";
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import LockIcon from '@mui/icons-material/Lock';
+import image from '../../utils/images/Logo.png';
+
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -20,52 +21,61 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function Dashboard() {
+export default function Dashboard() {
 
+  return (
+    <div className="dashboardContainer">
+      <div className="appbarContainer">
+        <AppBar position="static">
+          <Toolbar className="appbar">
+            <img src={image} alt="Logo" className="logo" />
 
-  return (<>
-    <Navbar />
-    <Box className="fullscreen-box">
-      <h1 className="text">Tabla de competidores</h1>
-    </Box>
+            <Typography variant="h4" className="titleAppbar">
+              TABLA DE POSICIONES
+            </Typography>
 
-    <div >
-      <Link to="/login" >
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-          Login
-        </Button>
-      </Link>
+            <Link to="/login" >
+              <IconButton edge="end" color="inherit" className="icon">
+                <Avatar sx={{}}>
+                  <LockIcon />
+                </Avatar>
+              </IconButton>
+            </Link>
+          </Toolbar>
+        </AppBar>
+      </div>
+
+      <div className="dashboardTableContainer">
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow className="headerTable">
+                <TableCell className="titles" align="center">Posicion</TableCell>
+                <TableCell className="titles" align="center">Foto</TableCell>
+                <TableCell className="titles" align="center">Nombre</TableCell>
+                <TableCell className="titles" align="center">Redes</TableCell>
+                <TableCell className="titles" align="center">Puntaje</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" align="center" className="dashboardTableRow">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="center" className="dashboardTableRow">{row.calories}</TableCell>
+                  <TableCell align="center" className="dashboardTableRow">{row.fat}</TableCell>
+                  <TableCell align="center" className="dashboardTableRow">{row.carbs}</TableCell>
+                  <TableCell align="right" className="dashboardTableRow">{row.protein}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
-
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </>);
+  );
 }
-export default Dashboard;

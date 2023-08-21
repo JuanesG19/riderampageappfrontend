@@ -51,90 +51,88 @@ export default function Login() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        {/* Imagenes */}
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <CssBaseline />
+      {/* Imagenes */}
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundImage: `url(${require('../../utils/images/bmxLogin.jpg')})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      {/* Form */}
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className="formContainer">
+        <Box
           sx={{
-            backgroundImage: `url(${require('../../utils/images/bmxLogin.jpg')})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            my: 8,
+            mx: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
-        />
-        {/* Form */}
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+        >
 
-            <Avatar
-              alt="RideRampage"
-              src={image}
-              sx={{ width: 150, height: 150, mb: 3 }}
+          <Avatar
+            alt="RideRampage"
+            src={image}
+            sx={{ width: 150, height: 150, mb: 3 }}
+          />
+          <Typography component="h1" variant="h5" className='title' align="center">
+            SECCIÓN DE ADMINISTRADORES
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Usuario"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              className="custom-textfield"
             />
-            <Typography component="h1" variant="h5" className='title' align="center">
-              SECCIÓN DE ADMINISTRADORES
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              className="custom-textfield"
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className="button"
+            >
+              Ingresar
+            </Button>
+
+            <Typography variant="body2" color="black" align="center" sx={{ mt: 2 }} className="copyrightLogin">
+              {'Copyright © '}
+              <Link color="inherit" href="/">
+                RideRampageApp
+              </Link>{' '}
+              {new Date().getFullYear()}
+              {'.'}
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Usuario"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                className="custom-textfield"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                className="custom-textfield"
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                className="button"
-              >
-                Ingresar
-              </Button>
-
-              <Typography variant="body2" color="black" align="center" sx={{ mt: 2 }} >
-                {'Copyright © '}
-                <Link color="inherit" href="/">
-                  RideRampageApp
-                </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
-              </Typography>
-            </Box>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
-    </ThemeProvider>
+    </Grid>
   );
 }
