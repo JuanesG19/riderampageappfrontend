@@ -3,10 +3,13 @@ import Button from '@mui/material/Button';
 import Navbar from "../../components/navbar/Navbar";
 import Paper from '@mui/material/Paper';
 import { Link } from "react-router-dom";
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import "./styles.css";
-import { AppBar, Avatar, Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Container, IconButton, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import LockIcon from '@mui/icons-material/Lock';
 import image from '../../utils/images/Logo.png';
+import imageTournamentNotFound from '../../utils/images/ImagenTournamentNotFound.png';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -23,12 +26,27 @@ const rows = [
 
 export default function Dashboard() {
 
+  const [tournamentState, setTournamentState] = useState(false);
+
+  const handleSwitchChange = () => {
+    setTournamentState(!tournamentState);
+  };
+
   return (
     <div className="dashboardContainer">
+
       <div className="appbarContainer">
         <AppBar position="static">
           <Toolbar className="appbar">
             <img src={image} alt="Logo" className="logo" />
+
+            {/* Swtich temporal */}
+            <FormControlLabel
+              control={
+                <Switch checked={tournamentState} onChange={handleSwitchChange} />
+              }
+              sx={{ paddingLeft: 5 }}
+            />
 
             <Typography variant="h4" className="titleAppbar">
               TABLA DE POSICIONES
@@ -45,37 +63,56 @@ export default function Dashboard() {
         </AppBar>
       </div>
 
-      <div className="dashboardTableContainer">
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow className="headerTable">
-                <TableCell className="titles" align="center">Posicion</TableCell>
-                <TableCell className="titles" align="center">Foto</TableCell>
-                <TableCell className="titles" align="center">Nombre</TableCell>
-                <TableCell className="titles" align="center">Redes</TableCell>
-                <TableCell className="titles" align="center">Puntaje</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row" align="center" className="dashboardTableRow">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="center" className="dashboardTableRow">{row.calories}</TableCell>
-                  <TableCell align="center" className="dashboardTableRow">{row.fat}</TableCell>
-                  <TableCell align="center" className="dashboardTableRow">{row.carbs}</TableCell>
-                  <TableCell align="right" className="dashboardTableRow">{row.protein}</TableCell>
+      {tournamentState ? (
+        <div className="dashboardTableContainer">
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow className="headerTable">
+                  <TableCell className="titles" align="center">Posicion</TableCell>
+                  <TableCell className="titles" align="center">Foto</TableCell>
+                  <TableCell className="titles" align="center">Nombre</TableCell>
+                  <TableCell className="titles" align="center">Redes</TableCell>
+                  <TableCell className="titles" align="center">Puntaje</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row" align="center" className="dashboardTableRow">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="center" className="dashboardTableRow">{row.calories}</TableCell>
+                    <TableCell align="center" className="dashboardTableRow">{row.fat}</TableCell>
+                    <TableCell align="center" className="dashboardTableRow">{row.carbs}</TableCell>
+                    <TableCell align="right" className="dashboardTableRow">{row.protein}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ) : (
+        <div className="rootTournamentNotFound">
+          <Container maxWidth="sm" className="paperTournamentNotFound">
+            <img
+              src={image}
+              alt="No existe ningún torneo"
+              className="imageTournamentNotFound"
+            />
+            <Typography className="textTournamentNotFound">
+              NO EXISTE NINGUN TORNEO ACTIVO
+            </Typography>
+
+          </Container>
+        </div >
+      )
+      }
+
+
+    </div >
   );
 }

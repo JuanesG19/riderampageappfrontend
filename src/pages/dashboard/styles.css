@@ -23,7 +23,7 @@
   font-size: 1rem !important;
 }
 
-.titles:hover{
+.titles:hover {
   color: white !important;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .dashboardContainer {
-  width: 100vw !important;
+  width: 100%;
   height: 100vh !important;
   background-color: #1A1A1A;
 
@@ -73,12 +73,55 @@
   font-weight: bold;
 }
 
-.dashboardTableContainer{
+.dashboardTableContainer {
   padding: 10px !important;
 }
 
+.rootTournamentNotFound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  /* Ajusta según sea necesario */
+}
+
+.paperTournamentNotFound {
+  padding: 8px;
+  /* Ajusta el padding según sea necesario */
+  text-align: center;
+  background-color: transparent;
+  /* Fondo transparente */
+}
+
+.imageTournamentNotFound {
+  margin-top: 16px;
+  max-width: 50%;
+}
+
+.messageContainer {
+  background-color: #1A1A1A
+}
+
+.textTournamentNotFound{
+  color: #ff7f00 !important;
+  font-size: 3rem !important;
+}
+
+.textTournamentNotFound:hover{
+  color: white !important;
+}
+
 @media (max-width: 600px) {
+
+  .titleAppbar{
+    font-size: 1.5rem !important;
+  }
+
   .text {
     font-size: 1.5rem;
+  }
+
+  .textTournamentNotFound{
+    font-size: 2rem !important;
   }
 }
