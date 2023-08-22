@@ -1,0 +1,22 @@
+.drawer {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.drawerPaper {
+  width: 240px;
+}
+
+.title {
+  color: black;
+  padding-top: 15px;
+  padding-left: 32%;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.toolbar {
+  /* Assuming you're referencing 'theme.mixins.toolbar' from your theme */
+  /* You might need to provide more context or define this class */
+}
+
