@@ -52,7 +52,7 @@ export default function Dashboard() {
               TABLA DE POSICIONES
             </Typography>
 
-            <Link to="/login" >
+            <Link to="/createTournament" >
               <IconButton edge="end" color="inherit" className="icon">
                 <Avatar sx={{}}>
                   <LockIcon />

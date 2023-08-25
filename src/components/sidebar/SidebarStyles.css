@@ -1,3 +1,7 @@
+* {
+  text-decoration: none !important;
+}
+
 .drawer {
   width: 240px;
   flex-shrink: 0;
@@ -7,16 +11,29 @@
   width: 240px;
 }
 
-.title {
-  color: black;
-  padding-top: 15px;
+.titleContainer {
+  background-color: #1A1A1A !important;
+  color: #ff7f00 !important;
+  display: flex;
+  align-items: center;
   padding-left: 32%;
   font-size: 30px;
   font-weight: bold;
 }
 
-.toolbar {
-  /* Assuming you're referencing 'theme.mixins.toolbar' from your theme */
-  /* You might need to provide more context or define this class */
+
+.linkSidebar {
+  color: #1A1A1A !important;
+  display: flex;
+  align-items: center;
+  width: 100% !important;
+} 
+
+.linkSidebar:hover {
+  color: #ff7f00 !important;
 }
 
+.listSidebar:hover {
+  /* border: 1px solid #ff7f00; */
+  background-color: #ff800044 !important;
+}

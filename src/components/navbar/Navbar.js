@@ -15,7 +15,7 @@ import Sidebar from '../sidebar/Sidebar';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Navbar({ onMenuClick }) {
+function Navbar({ title }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
@@ -48,7 +48,7 @@ function Navbar({ onMenuClick }) {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className="navbarContainer">
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSidebarToggle}
           >
             <MenuIcon />
@@ -61,8 +61,8 @@ function Navbar({ onMenuClick }) {
             />
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            HOLA PRUEBA
+          <Box sx={{ flexGrow: 1 }} className="navbarTitle">
+            {title}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -88,7 +88,7 @@ function Navbar({ onMenuClick }) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleCloseUserMenu} >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

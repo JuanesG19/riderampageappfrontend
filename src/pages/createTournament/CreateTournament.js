@@ -11,7 +11,7 @@ function CreateTournament() {
 
   return (
     <div >
-      <Navbar />
+      <Navbar title="CREAR TORNEO" />
       <Grid >
         <Grid item xs={12} md={9} lg={10}>
           <Container>

@@ -1,4 +1,33 @@
-.AppBar {
-  background: rgb(255, 137, 94);
-  background: linear-gradient(0deg, rgba(255, 137, 94, 1) 0%, rgba(255, 68, 0, 1) 100%);
+.navbarContainer {
+  background-color: #1A1A1A !important;
+}
+
+.navbarTitle {
+  display: flex !important;
+  text-align: center !important;
+  font-size: 2rem !important;
+  color: white !important;
+}
+
+.navbarTitle:hover {
+  color: #ff7f00 !important;
+}
+
+.sidebarIcon {
+  color: white !important;
+}
+
+.sidebarIcon:hover {
+  color: #ff7f00 !important;
+}
+
+@media (max-width: 600px) {
+
+  .navbarTitle {
+    text-align: left !important;
+    font-size: 1.5rem !important;
+  }
+
+
+
 }

@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import Login from "../pages/login/Login";
 import GuardedRoute from "./GuardedRoute";
 import CreateTournament from "../pages/createTournament/CreateTournament";
+import AddCompetitors from "../pages/addCompetitors/AddCompetitors";
 
 const routes = [
   { path: "/", element: <Dashboard /> },
@@ -15,6 +16,16 @@ const routes = [
       <GuardedRoute
         path="/createTournament"
         element={<CreateTournament />}
+        protected={true}
+      />
+    ),
+  },
+  {
+    path: "/addCompetitors",
+    element: (
+      <GuardedRoute
+        path="/addCompetitors"
+        element={<AddCompetitors />}
         protected={true}
       />
     ),

@@ -5,10 +5,23 @@ import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+import Cookies from "universal-cookie"
 import "./SidebarStyles.css";
 
-
 const Sidebar = ({ open, onClose }) => {
+
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  const logout = () => {
+
+    cookies.remove('username');
+    cookies.remove('loginTime');
+
+    setTimeout(navigate("/"), 9000);
+  };
 
   const toggleDrawer = (event) => {
     if (
@@ -21,61 +34,67 @@ const Sidebar = ({ open, onClose }) => {
     onClose();
   };
 
+
+
   const list = () => (
     <Box
       sx={{ width: 300 }}
       role="presentation"
       onClick={toggleDrawer}
       onKeyDown={toggleDrawer}
+      className="sidebarContainer"
     >
       <div />
       <div className="titleContainer">
-        <p className="title">MENU</p>
+        <p >MENU</p>
       </div>
       <List>
+
         <ListItem>
-          {/* Organigrama */}
-          <ListItemButton>
-            <ListItemIcon>
-              <SchemaIcon />
-            </ListItemIcon>
-            <Link style={{ color: "#193F76" }} to="/">
+          <Link className="linkSidebar" to="/">
+            <ListItemButton className="listSidebar">
+              <ListItemIcon>
+                <SchemaIcon />
+              </ListItemIcon>
               Tablero Del Torneo
-            </Link>
-          </ListItemButton>
+            </ListItemButton>
+          </Link>
         </ListItem>
+
         <Divider />
-        {/* Admin Unidades */}
+
         <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <DesignServicesIcon />
-            </ListItemIcon>
-            <Link style={{ color: "#193F76" }} to="/adminUnidades">
+          <Link className="linkSidebar" to="/addCompetitors">
+            <ListItemButton className="listSidebar">
+              <ListItemIcon>
+                <DesignServicesIcon />
+              </ListItemIcon>
               Agregar Competidores
-            </Link>
-          </ListItemButton>
+            </ListItemButton>
+          </Link>
         </ListItem>
+
         <Divider />
-        {/* Adminstrar Usuarios */}
+
         <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleAltIcon />
-            </ListItemIcon>
-            <Link style={{ color: "#193F76" }} to="/adminUsuarios">
+          <Link className="linkSidebar" to="/adminUsuarios">
+            <ListItemButton className="listSidebar">
+              <ListItemIcon>
+                <PeopleAltIcon />
+              </ListItemIcon>
               Cerrar torneo
-            </Link>
-          </ListItemButton>
+            </ListItemButton>
+          </Link>
         </ListItem>
+
         <Divider />
-        {/* Cerrar Sesion */}
-        <ListItem >
-          <ListItemButton>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemIcon style={{ color: "#193F76" }}>
+
+        <ListItem onClick={logout}>
+          <ListItemButton className="listSidebar">
+            <ListItemIcon className="linkSidebar" >
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
               Cerrar Sesión
             </ListItemIcon>
           </ListItemButton>

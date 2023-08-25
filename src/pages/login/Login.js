@@ -30,8 +30,6 @@ export default function Login() {
     try {
       const response = await loginAuthentication(data);
 
-      console.log(response);
-
       if (response === true) {
         const cookies = new Cookies();
 
@@ -39,7 +37,6 @@ export default function Login() {
         cookies.set("loginTime", new Date().getTime(), { path: '/' });
 
         setTimeout(navigate("/createTournament"), 9000);
-        setTimeout(window.location.reload(), 1000);
       } else {
         window.alert("Usuario o contraseña incorrecta")
         setTimeout(window.location.reload(), 1000);
