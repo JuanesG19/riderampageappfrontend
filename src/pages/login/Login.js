@@ -36,7 +36,7 @@ export default function Login() {
         cookies.set("username", data.get('username'), { path: '/' });
         cookies.set("loginTime", new Date().getTime(), { path: '/' });
 
-        setTimeout(navigate("/createTournament"), 9000);
+        setTimeout(navigate("/layout"), 9000);
       } else {
         window.alert("Usuario o contraseña incorrecta")
         setTimeout(window.location.reload(), 1000);

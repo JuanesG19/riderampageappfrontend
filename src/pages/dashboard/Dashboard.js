@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import Navbar from "../../components/navbar/Navbar";
 import Paper from '@mui/material/Paper';
@@ -9,7 +9,8 @@ import "./styles.css";
 import { AppBar, Avatar, Box, Container, IconButton, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import LockIcon from '@mui/icons-material/Lock';
 import image from '../../utils/images/Logo.png';
-import imageTournamentNotFound from '../../utils/images/ImagenTournamentNotFound.png';
+import Cookies from "universal-cookie"
+
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -26,11 +27,16 @@ const rows = [
 
 export default function Dashboard() {
 
+  const cookies = new Cookies();
   const [tournamentState, setTournamentState] = useState(false);
 
   const handleSwitchChange = () => {
     setTournamentState(!tournamentState);
   };
+
+  useEffect(() => {
+    setTournamentState(cookies.get('createdTournament'))
+  }, []);
 
   return (
     <div className="dashboardContainer">
@@ -39,20 +45,11 @@ export default function Dashboard() {
         <AppBar position="static">
           <Toolbar className="appbar">
             <img src={image} alt="Logo" className="logo" />
-
-            {/* Swtich temporal */}
-            <FormControlLabel
-              control={
-                <Switch checked={tournamentState} onChange={handleSwitchChange} />
-              }
-              sx={{ paddingLeft: 5 }}
-            />
-
             <Typography variant="h4" className="titleAppbar">
               TABLA DE POSICIONES
             </Typography>
 
-            <Link to="/createTournament" >
+            <Link to="/layout" >
               <IconButton edge="end" color="inherit" className="icon">
                 <Avatar sx={{}}>
                   <LockIcon />

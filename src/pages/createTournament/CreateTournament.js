@@ -67,7 +67,7 @@ function CreateTournament() {
 
     if (areFieldsValid && numOfJumpsValid) {
       console.log("Datos del formulario:", fields);
-      cookies.set("createdForm", true);
+      cookies.set("createdTournament", true);
 
       window.alert("Torneo Creado");
       setTimeout(navigate("/"), 1000);
