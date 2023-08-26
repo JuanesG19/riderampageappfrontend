@@ -31,7 +31,6 @@
   border-color: #FF4400; /* Color del borde cuando el TextField está enfocado */
 }
 
-
 .custom-textfield label.MuiInputLabel-root {
   color: #171717; /* Cambia el color del texto del label */
 }
