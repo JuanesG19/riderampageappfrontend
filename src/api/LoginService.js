@@ -1,16 +1,53 @@
-/**
- * Método que realiza la petición HTTP loguear un usuario admin
- * @param {user} user - Username del usuario admin
- * @param {password} password - password del usuario admin
- * @Return True o False
- */
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { app } from "./Firebase";
+
+
 export const loginAuthentication = async (data) => {
-
-  var response = false;
-
-  if (data.get('username') === 'admin' && data.get('password') === "1234") {
-    response = true;
+  const auth = getAuth(app);
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      data.get("username"),
+      data.get("password")
+    );
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    return null;
   }
-
-  return response;
 };
+
+export const createUser = async (data) => {
+  const auth = getAuth(app);
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      data.get("username"),
+      data.get("password")
+    );
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    return null;
+  }
+};
+
+export const logOut = async (data) => {
+  const auth = getAuth(app);
+  try {
+    await signOut(auth);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+

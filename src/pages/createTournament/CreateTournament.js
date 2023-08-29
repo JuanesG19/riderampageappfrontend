@@ -68,6 +68,7 @@ function CreateTournament() {
     if (areFieldsValid && numOfJumpsValid) {
       console.log("Datos del formulario:", fields);
       cookies.set("createdTournament", true);
+      cookies.set("tournamentData", fields); 
 
       window.alert("Torneo Creado");
       setTimeout(navigate("/"), 1000);
@@ -98,11 +99,10 @@ function CreateTournament() {
                 label="Nombre del Torneo"
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.tournamentName === ""
+                className={`standarTextField ${formSubmitted && fields.tournamentName === ""
                     ? "invalidField"
                     : ""
-                }`}
+                  }`}
                 value={fields.tournamentName}
                 onChange={handleFieldChange("tournamentName")}
                 error={formSubmitted && fields.tournamentName === ""}
@@ -118,9 +118,8 @@ function CreateTournament() {
                 label="Ubicación"
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.location === "" ? "invalidField" : ""
-                }`}
+                className={`standarTextField ${formSubmitted && fields.location === "" ? "invalidField" : ""
+                  }`}
                 value={fields.location}
                 onChange={handleFieldChange("location")}
                 error={formSubmitted && fields.location === ""}
@@ -136,11 +135,10 @@ function CreateTournament() {
                 <DatePicker
                   label="Fecha del Torneo"
                   fullWidth
-                  className={`standarTextField ${
-                    formSubmitted && !fields.tournamentDate
+                  className={`standarTextField ${formSubmitted && !fields.tournamentDate
                       ? "invalidField"
                       : ""
-                  }`}
+                    }`}
                   sx={{ width: "100%", marginTop: 2 }}
                   value={fields.tournamentDate}
                   onChange={handleDateChange}
@@ -167,9 +165,8 @@ function CreateTournament() {
                 label="Modalidad"
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.modality === "" ? "invalidField" : ""
-                }`}
+                className={`standarTextField ${formSubmitted && fields.modality === "" ? "invalidField" : ""
+                  }`}
                 value={fields.modality}
                 onChange={handleFieldChange("modality")}
                 error={formSubmitted && fields.modality === ""}
@@ -183,9 +180,8 @@ function CreateTournament() {
                 label="Categoría"
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.category === "" ? "invalidField" : ""
-                }`}
+                className={`standarTextField ${formSubmitted && fields.category === "" ? "invalidField" : ""
+                  }`}
                 value={fields.category}
                 onChange={handleFieldChange("category")}
                 error={formSubmitted && fields.category === ""}
@@ -203,11 +199,10 @@ function CreateTournament() {
                 rows={4.5}
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.description === ""
+                className={`standarTextField ${formSubmitted && fields.description === ""
                     ? "invalidField"
                     : ""
-                }`}
+                  }`}
                 value={fields.description}
                 onChange={handleFieldChange("description")}
                 error={formSubmitted && fields.description === ""}
@@ -232,9 +227,8 @@ function CreateTournament() {
                 label="Nombre de Pista"
                 fullWidth
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && fields.trackName === "" ? "invalidField" : ""
-                }`}
+                className={`standarTextField ${formSubmitted && fields.trackName === "" ? "invalidField" : ""
+                  }`}
                 value={fields.trackName}
                 onChange={handleFieldChange("trackName")}
                 error={formSubmitted && fields.trackName === ""}
@@ -253,9 +247,8 @@ function CreateTournament() {
                 value={numOfJumps}
                 onChange={handleNumOfJumpsChange}
                 margin="normal"
-                className={`standarTextField ${
-                  formSubmitted && numOfJumps < 0 ? "invalidField" : ""
-                }`}
+                className={`standarTextField ${formSubmitted && numOfJumps < 0 ? "invalidField" : ""
+                  }`}
                 error={formSubmitted && numOfJumps < 0}
                 helperText={
                   formSubmitted && numOfJumps < 0

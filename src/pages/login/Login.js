@@ -30,10 +30,10 @@ export default function Login() {
     try {
       const response = await loginAuthentication(data);
 
-      if (response === true) {
+      if (response !== null) {
         const cookies = new Cookies();
 
-        cookies.set("username", data.get('username'), { path: '/' });
+        cookies.set("id", response.uid, { path: '/' });
         cookies.set("loginTime", new Date().getTime(), { path: '/' });
 
         setTimeout(navigate("/layout"), 9000);

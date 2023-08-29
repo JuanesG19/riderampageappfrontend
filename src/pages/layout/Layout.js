@@ -10,7 +10,7 @@ export default function Layout() {
   const [tournamentState, setTournamentState] = useState(false);
 
   useEffect(() => {
-    setTournamentState(cookies.get("createdTournament") === "true"); // Parse the cookie value as boolean
+    setTournamentState(cookies.get("createdTournament") === "true");
   }, []);
 
   return (

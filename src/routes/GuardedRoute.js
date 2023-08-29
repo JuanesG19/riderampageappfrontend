@@ -1,6 +1,9 @@
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React from "react";
 import { Route, Navigate, Routes } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { app } from "../api/Firebase";
+import { logOut } from "../api/LoginService";
 
 const GuardedRoute = ({
   path,
@@ -8,6 +11,15 @@ const GuardedRoute = ({
   protected: isProtected,
   ...props
 }) => {
+
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    if (user === null) {
+      cookies.remove("id");
+      cookies.remove("loginTime");
+    }
+  });
+
   const cookies = new Cookies();
 
   /* Validar el tiempo de loggeo */
@@ -16,11 +28,12 @@ const GuardedRoute = ({
   const currentTime = new Date().getTime();
 
   if (currentTime - loginTime >= twentyFourHours) {
-    cookies.remove("username");
+    cookies.remove("id");
     cookies.remove("loginTime");
+    logOut();
   }
 
-  const user = cookies.get("username");
+  const user = cookies.get("id");
 
   if (user) {
     return (

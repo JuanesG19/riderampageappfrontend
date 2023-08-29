@@ -9,18 +9,27 @@ import { useNavigate } from "react-router-dom";
 
 import Cookies from "universal-cookie"
 import "./SidebarStyles.css";
+import { logOut } from '../../api/LoginService';
 
 const Sidebar = ({ open, onClose }) => {
 
   const cookies = new Cookies();
   const navigate = useNavigate();
 
-  const logout = () => {
+  const logout = async () => {
 
-    cookies.remove('username');
-    cookies.remove('loginTime');
+    const logout = await logOut();
 
-    setTimeout(navigate("/"), 9000);
+    if (logout) {
+      cookies.remove('username');
+      cookies.remove('loginTime');
+      window.alert("Cierre de sesión exitoso")
+      setTimeout(navigate("/"), 9000);
+    } else {
+      window.alert("Error cerrando sesión")
+      setTimeout(navigate("/"), 9000);
+    }
+
   };
 
   const toggleDrawer = (event) => {
