@@ -33,7 +33,7 @@ export default function Login() {
       if (response !== null) {
         const cookies = new Cookies();
 
-        cookies.set("id", response.uid, { path: '/' });
+        cookies.set("userId", response.uid, { path: '/' });
         cookies.set("loginTime", new Date().getTime(), { path: '/' });
 
         setTimeout(navigate("/layout"), 9000);

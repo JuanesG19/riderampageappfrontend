@@ -33,7 +33,7 @@ const GuardedRoute = ({
     logOut();
   }
 
-  const user = cookies.get("id");
+  const user = cookies.get("userId");
 
   if (user) {
     return (

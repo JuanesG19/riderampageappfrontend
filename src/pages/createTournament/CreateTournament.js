@@ -19,10 +19,13 @@ import {
 } from "@mui/x-date-pickers";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import { createNewTournament } from "../../api/TournamentService";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateTournament() {
   const [numOfJumps, setNumOfJumps] = useState(0);
   const [fields, setFields] = useState({
+    uuid: uuidv4(),
     tournamentName: "",
     location: "",
     tournamentDate: null,
@@ -30,8 +33,13 @@ function CreateTournament() {
     category: "",
     description: "",
     trackName: "",
+    jumps: 0,
+    riders: [],
+    state: false,
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const cookies = new Cookies();
+
 
   const areFieldsValid = Object.values(fields).every((value) => value !== "");
   let navigate = useNavigate();
@@ -46,6 +54,7 @@ function CreateTournament() {
 
   const handleNumOfJumpsChange = (event) => {
     const value = event.target.value;
+    fields.jumps = value;
     setNumOfJumps(value);
   };
 
@@ -57,21 +66,22 @@ function CreateTournament() {
   };
 
   const handleFormSubmit = (event) => {
-    const cookies = new Cookies();
+
 
     event.preventDefault();
     setFormSubmitted(true);
 
-    // Validate fields before submitting
     const numOfJumpsValid = numOfJumps >= 0;
 
     if (areFieldsValid && numOfJumpsValid) {
-      console.log("Datos del formulario:", fields);
-      cookies.set("createdTournament", true);
-      cookies.set("tournamentData", fields); 
-
-      window.alert("Torneo Creado");
-      setTimeout(navigate("/"), 1000);
+      try {
+        createNewTournament(fields);
+        cookies.set("createdTournament", true)
+        window.alert(`El torneo: ${fields.tournamentName} ha sido creado`);
+        setTimeout(navigate("/"), 1000);
+      } catch (error) {
+        console.log("No Enviado");
+      }
     } else {
       // Handle validation errors
       console.log("No Enviado");
@@ -100,8 +110,8 @@ function CreateTournament() {
                 fullWidth
                 margin="normal"
                 className={`standarTextField ${formSubmitted && fields.tournamentName === ""
-                    ? "invalidField"
-                    : ""
+                  ? "invalidField"
+                  : ""
                   }`}
                 value={fields.tournamentName}
                 onChange={handleFieldChange("tournamentName")}
@@ -136,8 +146,8 @@ function CreateTournament() {
                   label="Fecha del Torneo"
                   fullWidth
                   className={`standarTextField ${formSubmitted && !fields.tournamentDate
-                      ? "invalidField"
-                      : ""
+                    ? "invalidField"
+                    : ""
                     }`}
                   sx={{ width: "100%", marginTop: 2 }}
                   value={fields.tournamentDate}
@@ -200,8 +210,8 @@ function CreateTournament() {
                 fullWidth
                 margin="normal"
                 className={`standarTextField ${formSubmitted && fields.description === ""
-                    ? "invalidField"
-                    : ""
+                  ? "invalidField"
+                  : ""
                   }`}
                 value={fields.description}
                 onChange={handleFieldChange("description")}
