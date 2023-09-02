@@ -20,7 +20,7 @@ export const createNewTournament = async (tournamentData, setTournamentExists) =
     category: tournamentData.category,
     description: tournamentData.description,
     trackName: tournamentData.trackName,
-    jumps: tournamentData.jumps,
+    modules: tournamentData.modules,
     riders: tournamentData.riders,
     state: true,
   });

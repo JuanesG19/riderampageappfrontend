@@ -14,11 +14,13 @@ export default function Layout() {
   useEffect(() => {
     const createdTournamentCookie = cookies.get("createdTournament");
     setTournamentState(createdTournamentCookie);
-  }, [cookies]);
+    console.log("layo", tournamentState)
+
+  }, []);
 
   return (
     <>
-      {tournamentState ? <DashboardCreatedTournament /> : <CreateTournament />}
+      {tournamentState ? <CreateTournament /> : <DashboardCreatedTournament />}
     </>
   );
 }

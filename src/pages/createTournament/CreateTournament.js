@@ -33,7 +33,7 @@ function CreateTournament() {
     category: "",
     description: "",
     trackName: "",
-    jumps: 0,
+    modules: 0,
     riders: [],
     state: false,
   });
@@ -54,7 +54,7 @@ function CreateTournament() {
 
   const handleNumOfJumpsChange = (event) => {
     const value = event.target.value;
-    fields.jumps = value;
+    fields.modules = value;
     setNumOfJumps(value);
   };
 
@@ -76,7 +76,6 @@ function CreateTournament() {
     if (areFieldsValid && numOfJumpsValid) {
       try {
         createNewTournament(fields);
-        cookies.set("createdTournament", true)
         window.alert(`El torneo: ${fields.tournamentName} ha sido creado`);
         setTimeout(navigate("/"), 1000);
       } catch (error) {
@@ -251,7 +250,7 @@ function CreateTournament() {
             </Grid>
             <Grid item xs={12} md={4}>
               <TextField
-                label="Número de Saltos"
+                label="Modulos"
                 type="number"
                 fullWidth
                 value={numOfJumps}
