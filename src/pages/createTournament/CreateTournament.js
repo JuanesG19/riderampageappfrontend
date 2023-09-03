@@ -33,7 +33,7 @@ function CreateTournament() {
     category: "",
     description: "",
     trackName: "",
-    modules: 0,
+    jumps: 0,
     riders: [],
     state: false,
   });
@@ -54,7 +54,7 @@ function CreateTournament() {
 
   const handleNumOfJumpsChange = (event) => {
     const value = event.target.value;
-    fields.modules = value;
+    fields.jumps = value;
     setNumOfJumps(value);
   };
 

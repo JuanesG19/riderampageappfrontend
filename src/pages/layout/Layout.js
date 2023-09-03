@@ -12,16 +12,14 @@ export default function Layout() {
   const [tournamentState, setTournamentState] = useState(false);
 
   useEffect(() => {
-    const createdTournamentCookie = cookies.get("createdTournament");
-    setTournamentState(createdTournamentCookie);
-    console.log("layo", tournamentState)
-
+    const createdTournamentCookie = cookies.get("tournamentState");
+    const parse = JSON.parse(createdTournamentCookie);
+    setTournamentState(parse);
   }, []);
 
   return (
     <>
-      {tournamentState ? <CreateTournament /> : <DashboardCreatedTournament />}
+      {tournamentState ? <DashboardCreatedTournament /> : <CreateTournament />}
     </>
   );
 }
-
