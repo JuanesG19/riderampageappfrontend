@@ -86,10 +86,10 @@ export default function DashboardCreatedTournament() {
           <div className="addRiderButtonDCT">
             <Button
               variant="contained"
-              sx={{ mt: 4, mb: 6 }}
-              type="submit"
+              sx={{ mt: 2, mb: 2 }}
               className="sendButton"
               onClick={addRider}
+              size="small" // Establece el tamaño del botón en "small"
             >
               Agregar Competidor
             </Button>
@@ -163,31 +163,31 @@ export default function DashboardCreatedTournament() {
               {/* Formulario para agregar competidor en una grilla */}
               <form>
                 <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                    <TextField label="Nombre" fullWidth sx={{ width: '100%' }} /> {/* Ajusta el ancho del TextField */}
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
+                    <TextField label="Nombre" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Cédula" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Teléfono" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Edad" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Ciudad" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Club" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="EPS" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={4} lg={4}>
                     <TextField label="Teléfono del Responsable" fullWidth sx={{ width: '100%' }} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} md={12} lg={12}>
                     <TextField label="Redes" fullWidth sx={{ width: '100%' }} />
                   </Grid>
                 </Grid>
