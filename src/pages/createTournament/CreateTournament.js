@@ -40,7 +40,6 @@ function CreateTournament() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const cookies = new Cookies();
 
-
   const areFieldsValid = Object.values(fields).every((value) => value !== "");
   let navigate = useNavigate();
 
@@ -66,8 +65,6 @@ function CreateTournament() {
   };
 
   const handleFormSubmit = (event) => {
-
-
     event.preventDefault();
     setFormSubmitted(true);
 

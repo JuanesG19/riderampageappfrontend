@@ -1,4 +1,13 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { app, db } from "./Firebase";
 import Cookies from "universal-cookie";
 
@@ -7,10 +16,10 @@ const formattedDate = (date) => {
   return date.toLocaleDateString("es-CO", options);
 };
 
-export const createNewTournament = async (tournamentData, setTournamentExists) => {
-
-  const cookies = new Cookies();
-
+export const createNewTournament = async (
+  tournamentData,
+  setTournamentExists
+) => {
   const docRef = await addDoc(collection(db, "tournaments"), {
     uuid: tournamentData.uuid,
     tournamentName: tournamentData.tournamentName,
@@ -20,12 +29,11 @@ export const createNewTournament = async (tournamentData, setTournamentExists) =
     category: tournamentData.category,
     description: tournamentData.description,
     trackName: tournamentData.trackName,
-    modules: tournamentData.modules,
+    modules: tournamentData.jumps,
     riders: tournamentData.riders,
     state: true,
   });
 
-  cookies.set("tournamentid", docRef.id);
   return docRef.id;
 };
 
@@ -45,3 +53,39 @@ export const checkIfTournamentExists = async () => {
   const exists = querySnapshot.size > 0;
   return exists;
 };
+
+export const addCompetitors = async (id, competitorData) => {
+  const docRef = doc(db, "tournaments", id);
+
+  const docSnap = await getDoc(docRef);
+  const existingData = docSnap.data().riders;
+
+  const updatedData = [...existingData, competitorData];
+
+  try {
+    await updateDoc(docRef, {
+      riders: updatedData,
+    });
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getRidersById = async (id) => {
+  const docRef = doc(db, "tournaments", id);
+  docRef.get().then((doc) => {
+    if (doc.exists) {
+      // Si el documento existe, accede a la propiedad "riders"
+      const riders = doc.data().riders;
+      console.log(riders);
+    } else {
+      console.log('El documento no existe');
+    }
+  }).catch((error) => {
+    console.log('Error al obtener el documento:', error);
+  });
+};
+
+

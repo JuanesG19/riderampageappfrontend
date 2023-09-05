@@ -54,7 +54,7 @@ export default function Dashboard() {
   useEffect(() => {
     const ts = cookies.get("tournamentState");
     const td = cookies.get("tournamentData");
-    const parse = JSON.parse(ts);
+    const parse = ts ? JSON.parse(ts) : false;
     setTournamentState(parse);
     setTournamentData(td);
   }, []);

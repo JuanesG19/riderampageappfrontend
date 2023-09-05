@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import "./DashboardCreatedTournamentStyles.css";
 import Navbar from "../../components/navbar/Navbar";
 import Cookies from "universal-cookie";
@@ -22,10 +22,10 @@ import {
   Typography,
 } from "@mui/material";
 import { getTournamentById } from "../../api/TournamentService";
-import { useEffect } from "react";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
 import { Modal } from "@mui/base";
 import { Box } from "@mui/system";
+import AddCompetitorDialog from "../addCompetitorsDialog/AddCompetitorsDialog";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -41,23 +41,26 @@ const rows = [
 
 export default function DashboardCreatedTournament() {
   const cookies = new Cookies();
-  const [tournamentData, setTournamentData] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [tournamentData, setTournamentData] = useState(null);
+  const [tournamentRiders, setTournamentRiders] = useState(null);
+
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const td = cookies.get("tournamentData");
     setTournamentData(td);
+    setTournamentRiders(td.riders)
     setIsLoading(false);
+    console.log(tournamentRiders)
   }, []);
 
-  const addRider = (event) => {
-    // Abre el modal cuando se hace clic en "Agregar Competidor"
+  const addRider = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    // Cierra el modal
     setIsModalOpen(false);
   };
 
@@ -87,20 +90,20 @@ export default function DashboardCreatedTournament() {
             <Button
               variant="contained"
               sx={{ mt: 2, mb: 2 }}
-              className="sendButton"
+              className="sendButtonDCT"
               onClick={addRider}
-              size="small" // Establece el tamaño del botón en "small"
+              size="small"
             >
               Agregar Competidor
             </Button>
           </div>
 
           <div className="dashboardTableContainer">
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="tableDCTContainer">
               <div className="headerTableDCT">COMPETIDORES</div>
               <Table aria-label="simple table">
                 <TableHead>
-                  <TableRow className="headerTable">
+                  <TableRow className="headerTableDCT">
                     <TableCell className="titles" align="center">
                       Posicion
                     </TableCell>
@@ -151,57 +154,7 @@ export default function DashboardCreatedTournament() {
             </TableContainer>
           </div>
 
-          {/* Modal para agregar competidor */}
-          <Dialog
-            open={isModalOpen}
-            onClose={handleCloseModal}
-            maxWidth="md" // Puedes ajustar el tamaño del modal aquí (por defecto, es 'sm')
-            fullWidth // Opcional: Hace que el modal ocupe el ancho completo
-          >
-            <DialogTitle>Agregar Competidor</DialogTitle>
-            <DialogContent>
-              {/* Formulario para agregar competidor en una grilla */}
-              <form>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Nombre" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Cédula" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Teléfono" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Edad" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Ciudad" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Club" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="EPS" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4} lg={4}>
-                    <TextField label="Teléfono del Responsable" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={12} lg={12}>
-                    <TextField label="Redes" fullWidth sx={{ width: '100%' }} />
-                  </Grid>
-                </Grid>
-              </form>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseModal} color="primary">
-                Cancelar
-              </Button>
-              <Button onClick={handleCloseModal} color="primary">
-                Guardar
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <AddCompetitorDialog open={isModalOpen} onClose={handleCloseModal} />
         </>
       ) : (
         <p>Error al cargar los datos del torneo.</p>

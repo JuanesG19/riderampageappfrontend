@@ -5,7 +5,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import Login from "../pages/login/Login";
 import GuardedRoute from "./GuardedRoute";
 import CreateTournament from "../pages/createTournament/CreateTournament";
-import AddCompetitors from "../pages/addCompetitors/AddCompetitors";
+import AddCompetitors from "../pages/addCompetitorsDialog/AddCompetitorsDialog";
 import Layout from "../pages/layout/Layout";
 
 const routes = [

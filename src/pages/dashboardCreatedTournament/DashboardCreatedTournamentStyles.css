@@ -27,3 +27,19 @@
 .headerTableDCT:hover {
   color: white;
 }
+
+.sendButtonDCT {
+  background-color: #1a1a1a !important;
+  padding: 5px 30px 5px 30px !important;
+  color: white !important;
+  font-weight: bolder !important;
+}
+
+.sendButtonDCT:hover {
+  background-color: #0C0C0C !important;
+  color: #ff7f00 !important;
+}
+
+.tableDCTContainer {
+  border: 1px solid #1a1a1a8f !important;
+}

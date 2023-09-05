@@ -15,6 +15,7 @@ import {
 import { db } from "./api/Firebase";
 
 const App = () => {
+
   const [response, setResponse] = useState(false);
 
   useEffect(() => {
@@ -33,10 +34,12 @@ const App = () => {
         cookies.set("tournamentState", true);
         docSnap.forEach((doc) => {
           cookies.set("tournamentData", doc.data());
+          cookies.set("tournamentId", doc.id);
         });
       } else {
         cookies.set("tournamentState", false);
         cookies.remove("tournamentData");
+        cookies.remove("tournamentId");
       }
     };
 
