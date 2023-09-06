@@ -1,6 +1,8 @@
 .dashboardCTContainer {
-  width: 100% !important;
-  height: 100vh !important;
+  width: 100%;
+  background-color: #1a1a1a;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .DCTContainer {
@@ -20,7 +22,7 @@
   font-weight: bold;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: solid 1px #d06800;
+  border-bottom: solid 1px #1a1a1a;
   color: #1a1a1a;
 }
 
@@ -29,17 +31,73 @@
 }
 
 .sendButtonDCT {
-  background-color: #1a1a1a !important;
+  background-color: #313131 !important;
   padding: 5px 30px 5px 30px !important;
   color: white !important;
   font-weight: bolder !important;
+  border: 1px solid #ff7f00 !important;
 }
 
 .sendButtonDCT:hover {
-  background-color: #0C0C0C !important;
-  color: #ff7f00 !important;
+  background-color: #ff7f00 !important;
+  color: white !important;
+  border: 1px solid white !important;
 }
 
 .tableDCTContainer {
+  max-width: 100%;
+  margin: 0 auto;
   border: 1px solid #1a1a1a8f !important;
+}
+
+.puntuacionTitle {
+  font-weight: bold;
+  text-align: center;
+}
+
+.puntuacionContent {
+  margin-top: 8px;
+  /* Ajusta el espacio vertical según tus preferencias */
+}
+
+.dCTTableRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboardTableContainer {
+  padding-bottom: 100px !important;
+}
+
+.points {
+  font-size: 30px !important;
+  font-weight: bolder !important;
+  color: black !important;
+}
+
+.points:hover {
+  color: #ff7f00 !important;
+}
+
+.bothSites {
+  border-style: solid;
+  border-width: 0 1px 0 1px;
+  border-color: black;
+}
+
+.smallCell {
+  min-width: 50px;
+  /* Ancho mínimo deseado */
+  max-width: 50px !important;
+  /* Ancho máximo deseado */
+}
+
+@media (max-width: 768px) {
+  .tableDCTContainer {
+    width: 100%;
+  }
+
+  .dCTTableRow {
+    flex-direction: row;
+  }
 }
