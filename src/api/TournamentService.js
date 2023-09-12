@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -93,8 +94,26 @@ export const getRidersById = async (id) => {
     });
 };
 
-export const deleteRiderFirebase = async (uuid, id) => {
-  /* FALTAAA */
+export const deleteRiderFirebase = async (tournamentId, riderId) => {
+  try {
+    const tournamentsRef = doc(db, "tournaments", tournamentId);
+
+    const tournamentsSnapshot = await getDoc(tournamentsRef);
+    const tournamentsData = tournamentsSnapshot.data();
+
+    const ridersArray = tournamentsData.riders;
+
+    const riderIndex = ridersArray.findIndex((rider) => rider.id === riderId);
+
+    if (riderIndex !== -1) {
+      ridersArray.splice(riderIndex, 1);
+      await updateDoc(tournamentsRef, { riders: ridersArray });
+    }
+    return true;
+  } catch (error) {
+    console.error("Error al eliminar el rider:", error);
+    return false;
+  }
 };
 
 export const rateRider = async (tournamentId, riderId, lap, rate) => {
@@ -145,7 +164,6 @@ export const rateRider = async (tournamentId, riderId, lap, rate) => {
 
         // Actualiza el documento del torneo con el rider modificado
         await updateDoc(tournamentRef, { riders: ridersData });
-
       } else {
         console.log("Rider no encontrado en el torneo");
         return null; // Puedes manejar la lógica si el rider no se encuentra

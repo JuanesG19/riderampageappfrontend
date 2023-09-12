@@ -96,8 +96,16 @@ export default function DashboardCreatedTournament() {
   };
 
   const deleteRider = async (id) => {
-    const deleted = await deleteRiderFirebase(tournamentData.uuid, id);
-    await console.log(deleted);
+    if (window.confirm("¿Estás seguro de que desea borrar el competidor?")) {
+      const deleted = await deleteRiderFirebase(tournamentId, id);
+      if (deleted) {
+        alert("El competidor fue eliminado del torneo");
+      } else {
+        alert("Error, el jugador no pudo ser eliminado");
+      }
+    } else {
+      alert("Acción cancelada");
+    }
   };
 
   return (
