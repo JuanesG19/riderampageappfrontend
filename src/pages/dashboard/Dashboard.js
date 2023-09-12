@@ -114,8 +114,10 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="dashboardTableContainer">
+              <div className="headerTableDCT headerTableDCTTitle">
+                COMPETIDORES
+              </div>
               <TableContainer component={Paper} className="tableDCTContainer">
-                <div className="headerTableDCT">COMPETIDORES</div>
                 <Table aria-label="simple table" className="responsive-table">
                   <TableHead>
                     <TableRow className="headerTableDCT">

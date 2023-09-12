@@ -26,6 +26,19 @@
   color: #1a1a1a;
 }
 
+.headerTableDCTTitle {
+  display: flex;
+  justify-content: center;
+  background-color: #ff7f00;
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px #1a1a1a;
+  color: #1a1a1a;
+}
+
+
 .headerTableDCT:hover {
   color: white;
 }

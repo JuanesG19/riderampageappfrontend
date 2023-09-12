@@ -53,14 +53,11 @@ export default function DashboardCreatedTournament() {
     const tid = cookies.get("tournamentId");
     setTournamentId(tid);
 
-    const unsubscribe = onSnapshot(
-      doc(db, "tournaments", tid),
-      (snapshot) => {
-        setTournamentData(snapshot.data());
-        setTournamentRiders(snapshot.data().riders);
-        setIsLoading(false);
-      }
-    );
+    const unsubscribe = onSnapshot(doc(db, "tournaments", tid), (snapshot) => {
+      setTournamentData(snapshot.data());
+      setTournamentRiders(snapshot.data().riders);
+      setIsLoading(false);
+    });
 
     return () => {
       unsubscribe();
@@ -132,8 +129,8 @@ export default function DashboardCreatedTournament() {
           </div>
 
           <div className="dashboardTableContainer">
+            <div className="headerTableDCT">COMPETIDORES</div>
             <TableContainer component={Paper} className="tableDCTContainer">
-              <div className="headerTableDCT">COMPETIDORES</div>
               <Table aria-label="simple table" className="responsive-table">
                 <TableHead>
                   <TableRow className="headerTableDCT">
