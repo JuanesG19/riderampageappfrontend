@@ -13,6 +13,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  CircularProgress,
   Container,
   Grid,
   IconButton,
@@ -31,32 +32,38 @@ import LockIcon from "@mui/icons-material/Lock";
 import image from "../../utils/images/Logo.png";
 import Cookies from "universal-cookie";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
-
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../api/Firebase";
 
 export default function Dashboard() {
   const cookies = new Cookies();
   const [tournamentState, setTournamentState] = useState();
   const [tournamentData, setTournamentData] = useState();
-
+  const [tournamentRiders, setTournamentRiders] = useState(null);
+  const [riderId, setRiderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
 
   useEffect(() => {
     const ts = cookies.get("tournamentState");
-    const td = cookies.get("tournamentData");
     const parse = ts ? JSON.parse(ts) : false;
     setTournamentState(parse);
-    setTournamentData(td);
+
+    const tid = cookies.get("tournamentId");
+    setTournamentId(tid);
+
+    const unsubscribe = onSnapshot(
+      doc(db, "tournaments", "M0jq6HRPfLLB7KcRiDMT"),
+      (snapshot) => {
+        setTournamentData(snapshot.data());
+        setTournamentRiders(snapshot.data().riders);
+        setIsLoading(false);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
@@ -87,60 +94,243 @@ export default function Dashboard() {
       )}
 
       {tournamentState ? (
-        <div className="dashboardTableContainer">
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow className="headerTable">
-                  <TableCell className="titles" align="center">
-                    Posicion
-                  </TableCell>
-                  <TableCell className="titles" align="center">
-                    Foto
-                  </TableCell>
-                  <TableCell className="titles" align="center">
-                    Nombre
-                  </TableCell>
-                  <TableCell className="titles" align="center">
-                    Redes
-                  </TableCell>
-                  <TableCell className="titles" align="center">
-                    Puntaje
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      align="center"
-                      className="dashboardTableRow"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="center" className="dashboardTableRow">
-                      {row.calories}
-                    </TableCell>
-                    <TableCell align="center" className="dashboardTableRow">
-                      {row.fat}
-                    </TableCell>
-                    <TableCell align="center" className="dashboardTableRow">
-                      {row.carbs}
-                    </TableCell>
-                    <TableCell align="right" className="dashboardTableRow">
-                      {row.protein}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+        <>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                paddingTop: "10rem",
+              }}
+            >
+              <CircularProgress size={100} style={{ color: "orange" }} />
+              <Typography
+                variant="h5"
+                style={{ marginTop: 20, color: "white" }}
+              >
+                Cargando datos...
+              </Typography>
+            </div>
+          ) : (
+            <div className="dashboardTableContainer">
+              <TableContainer component={Paper} className="tableDCTContainer">
+                <div className="headerTableDCT">COMPETIDORES</div>
+                <Table aria-label="simple table" className="responsive-table">
+                  <TableHead>
+                    <TableRow className="headerTableDCT">
+                      {/* Salida */}
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 1px 0 0",
+                          borderStyle: "solid",
+                        }}
+                      >
+                        Salida
+                      </TableCell>
+                      {/* Score */}
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 1px 0 1px",
+                          borderStyle: "solid",
+                        }}
+                      >
+                        Ranking
+                      </TableCell>
+                      {/* Información */}
+
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 0 0 0",
+                          borderStyle: "solid",
+                        }}
+                      >
+                        Información
+                      </TableCell>
+
+                      {/* Puntuacion */}
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 0 0 1px",
+                          borderStyle: "solid",
+                        }}
+                      ></TableCell>
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 0 0 0",
+                          borderStyle: "solid",
+                        }}
+                      >
+                        Score
+                      </TableCell>
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 1px 0 0",
+                          borderStyle: "solid",
+                        }}
+                      ></TableCell>
+                      <TableCell
+                        className="titles"
+                        align="center"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "0 1px 0 0",
+                          borderStyle: "solid",
+                        }}
+                      >
+                        Puntaje Final
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {tournamentRiders.map((row) => (
+                      <TableRow
+                        key={row.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        {/* Salida */}
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow hidden-mobile points"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 0",
+                            borderStyle: "solid",
+                            width: "30px",
+                          }}
+                        >
+                          1
+                        </TableCell>
+
+                        {/* Score */}
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow hidden-mobile points"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 0",
+                            borderStyle: "solid",
+                            width: "30px",
+                          }}
+                        >
+                          2
+                        </TableCell>
+
+                        {/* Columnas 3-5 */}
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 0 1px 0",
+                            borderStyle: "solid",
+                          }}
+                        >
+                          <div>
+                            <span className="puntuacionTitle">Nombre:</span>
+                            {row.name}
+                            <div>
+                              <span className="puntuacionTitle">Ciudad:</span>{" "}
+                              {row.city}
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 1px",
+                            borderStyle: "solid",
+                          }}
+                        >
+                          <div>
+                            <div className="puntuacionTitle">Score 1</div>
+                            <div className="puntuacionContent">
+                              {row.score[0].firstScore}
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        {/* Columnas 9-11 */}
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 0",
+                            borderStyle: "solid",
+                          }}
+                        >
+                          <div>
+                            <div className="puntuacionTitle">Score 2</div>
+                            <div className="puntuacionContent">
+                              {" "}
+                              {row.score[0].secondScore}
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow"
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 0",
+                            borderStyle: "solid",
+                          }}
+                        >
+                          <div>
+                            <div className="puntuacionTitle">Score 3</div>
+                            <div className="puntuacionContent">
+                              {" "}
+                              {row.score[0].tirthScore}
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        <TableCell
+                          align="center"
+                          className="dCTTableRow hidden-mobile "
+                          style={{
+                            borderColor: "#ff7f00",
+                            borderWidth: "0 1px 1px 0",
+                            borderStyle: "solid",
+                            fontSize: "20px",
+                            width: "30px",
+                          }}
+                        >
+                          {row.score[0].finalScore}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          )}
+        </>
       ) : (
         <div className="rootTournamentNotFound">
           <Container maxWidth="sm" className="paperTournamentNotFound">

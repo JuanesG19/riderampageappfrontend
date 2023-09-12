@@ -38,34 +38,23 @@ import "firebase/compat/firestore"; // Para Cloud Firestore
 import { db } from "../../api/Firebase";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function DashboardCreatedTournament() {
   const cookies = new Cookies();
   const [tournamentData, setTournamentData] = useState();
   const [tournamentRiders, setTournamentRiders] = useState(null);
   const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalScoreOpen, setIsModalScoreOpen] = useState(false);
-  const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
 
   useEffect(() => {
     const tid = cookies.get("tournamentId");
     setTournamentId(tid);
 
     const unsubscribe = onSnapshot(
-      doc(db, "tournaments", "M0jq6HRPfLLB7KcRiDMT"),
+      doc(db, "tournaments", tid),
       (snapshot) => {
         setTournamentData(snapshot.data());
         setTournamentRiders(snapshot.data().riders);
