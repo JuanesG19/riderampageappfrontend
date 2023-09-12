@@ -22,13 +22,21 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { getTournamentById } from "../../api/TournamentService";
+import {
+  deleteRiderFirebase,
+  getTournamentById,
+} from "../../api/TournamentService";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
 import { Modal } from "@mui/base";
 import { Box } from "@mui/system";
 import AddCompetitorDialog from "../addCompetitorsDialog/AddCompetitorsDialog";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ScoreDialog from "../scoreDialog/ScoreDialog";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore"; // Para Cloud Firestore
+import { db } from "../../api/Firebase";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -44,26 +52,52 @@ const rows = [
 
 export default function DashboardCreatedTournament() {
   const cookies = new Cookies();
-  const [tournamentData, setTournamentData] = useState(null);
+  const [tournamentData, setTournamentData] = useState();
   const [tournamentRiders, setTournamentRiders] = useState(null);
-
+  const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalScoreOpen, setIsModalScoreOpen] = useState(false);
+  const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
 
   useEffect(() => {
-    const td = cookies.get("tournamentData");
-    setTournamentData(td);
-    setTournamentRiders(td.riders);
-    setIsLoading(false);
-    console.log(tournamentRiders);
+    const tid = cookies.get("tournamentId");
+    setTournamentId(tid);
+
+    const unsubscribe = onSnapshot(
+      doc(db, "tournaments", "M0jq6HRPfLLB7KcRiDMT"),
+      (snapshot) => {
+        setTournamentData(snapshot.data());
+        setTournamentRiders(snapshot.data().riders);
+        setIsLoading(false);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const addRider = () => {
     setIsModalOpen(true);
   };
 
+  const scoreDialog = (id) => {
+    setIsModalScoreOpen(true);
+    setRiderId(id);
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCloseScoreModal = () => {
+    setIsModalScoreOpen(false);
+  };
+
+  const deleteRider = async (id) => {
+    const deleted = await deleteRiderFirebase(tournamentData.uuid, id);
+    await console.log(deleted);
   };
 
   return (
@@ -80,7 +114,7 @@ export default function DashboardCreatedTournament() {
           }}
         >
           <CircularProgress size={100} style={{ color: "orange" }} />
-          <Typography variant="h5" style={{ marginTop: 20 }}>
+          <Typography variant="h5" style={{ marginTop: 20, color: "white" }}>
             Cargando datos...
           </Typography>
         </div>
@@ -331,7 +365,9 @@ export default function DashboardCreatedTournament() {
                       >
                         <div>
                           <div className="puntuacionTitle">Score 1</div>
-                          <div className="puntuacionContent">35</div>
+                          <div className="puntuacionContent">
+                            {row.score[0].firstScore}
+                          </div>
                         </div>
                       </TableCell>
 
@@ -347,7 +383,10 @@ export default function DashboardCreatedTournament() {
                       >
                         <div>
                           <div className="puntuacionTitle">Score 2</div>
-                          <div className="puntuacionContent">85</div>
+                          <div className="puntuacionContent">
+                            {" "}
+                            {row.score[0].secondScore}
+                          </div>
                         </div>
                       </TableCell>
 
@@ -362,7 +401,10 @@ export default function DashboardCreatedTournament() {
                       >
                         <div>
                           <div className="puntuacionTitle">Score 3</div>
-                          <div className="puntuacionContent">56</div>
+                          <div className="puntuacionContent">
+                            {" "}
+                            {row.score[0].tirthScore}
+                          </div>
                         </div>
                       </TableCell>
 
@@ -377,7 +419,7 @@ export default function DashboardCreatedTournament() {
                           width: "30px",
                         }}
                       >
-                        88.95
+                        {row.score[0].finalScore}
                       </TableCell>
 
                       {/* Columnas 21-22 */}
@@ -391,15 +433,14 @@ export default function DashboardCreatedTournament() {
                           width: "25px",
                         }}
                       >
-
-                        <IconButton>
+                        <IconButton onClick={() => scoreDialog(row.id)}>
+                          {" "}
                           <AddIcon />
                         </IconButton>
 
-                        <IconButton>
+                        <IconButton onClick={() => deleteRider(row.id)}>
                           <DeleteIcon />
                         </IconButton>
-
                       </TableCell>
                     </TableRow>
                   ))}
@@ -409,6 +450,11 @@ export default function DashboardCreatedTournament() {
           </div>
 
           <AddCompetitorDialog open={isModalOpen} onClose={handleCloseModal} />
+          <ScoreDialog
+            open={isModalScoreOpen}
+            onClose={handleCloseScoreModal}
+            riderId={riderId}
+          />
         </>
       ) : (
         <p>Error al cargar los datos del torneo.</p>

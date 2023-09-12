@@ -1,9 +1,11 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
+  getFirestore,
   query,
   updateDoc,
   where,
@@ -75,17 +77,85 @@ export const addCompetitors = async (id, competitorData) => {
 
 export const getRidersById = async (id) => {
   const docRef = doc(db, "tournaments", id);
-  docRef.get().then((doc) => {
-    if (doc.exists) {
-      // Si el documento existe, accede a la propiedad "riders"
-      const riders = doc.data().riders;
-      console.log(riders);
-    } else {
-      console.log('El documento no existe');
-    }
-  }).catch((error) => {
-    console.log('Error al obtener el documento:', error);
-  });
+  docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        // Si el documento existe, accede a la propiedad "riders"
+        const riders = doc.data().riders;
+        console.log(riders);
+      } else {
+        console.log("El documento no existe");
+      }
+    })
+    .catch((error) => {
+      console.log("Error al obtener el documento:", error);
+    });
 };
 
+export const deleteRiderFirebase = async (uuid, id) => {
+  /* FALTAAA */
+};
 
+export const rateRider = async (tournamentId, riderId, lap, rate) => {
+  try {
+    // Obtén una referencia al documento del torneo
+    const tournamentRef = doc(db, "tournaments", tournamentId);
+    const tournamentDoc = await getDoc(tournamentRef);
+
+    if (tournamentDoc.exists()) {
+      const ridersData = tournamentDoc.data().riders;
+
+      const riderIndex = ridersData.findIndex((rider) => rider.id === riderId);
+
+      if (riderIndex !== -1) {
+        const riderScore = ridersData[riderIndex].score[0];
+        const updatedScore = {
+          firstScore: riderScore.firstScore,
+          secondScore: riderScore.secondScore,
+          tirthScore: riderScore.tirthScore,
+          finalScore: riderScore.finalScore,
+        };
+
+        console.log("updatedScore", updatedScore);
+
+        switch (parseInt(lap)) {
+          case 1:
+            updatedScore.firstScore = parseFloat(rate);
+            break;
+          case 2:
+            updatedScore.secondScore = parseFloat(rate);
+            console.log("secondScore");
+
+            break;
+          case 3:
+            updatedScore.tirthScore = parseFloat(rate);
+            console.log("tirthScore");
+            break;
+          default:
+        }
+
+        updatedScore.finalScore =
+          updatedScore.firstScore +
+          updatedScore.secondScore +
+          updatedScore.tirthScore;
+
+        // Actualiza el puntaje del rider en el documento del torneo
+        ridersData[riderIndex].score[0] = updatedScore;
+
+        // Actualiza el documento del torneo con el rider modificado
+        await updateDoc(tournamentRef, { riders: ridersData });
+
+      } else {
+        console.log("Rider no encontrado en el torneo");
+        return null; // Puedes manejar la lógica si el rider no se encuentra
+      }
+    } else {
+      console.log("Torneo no encontrado");
+      return null; // Puedes manejar la lógica si el torneo no se encuentra
+    }
+  } catch (error) {
+    console.error("Error al obtener el puntaje del rider:", error);
+    return null; // Puedes manejar la lógica en caso de error
+  }
+};

@@ -32,7 +32,14 @@ export default function AddCompetitorDialog({ open, onClose }) {
     eps: "",
     numberPersonInCharge: "",
     socialNetworks: "",
-    score: 0
+    score: [
+      {
+        firstScore: 0,
+        secondScore: 0,
+        tirthScore: 0,
+        finalScore: 0,
+      },
+    ],
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -43,7 +50,7 @@ export default function AddCompetitorDialog({ open, onClose }) {
       (value) => value !== ""
     );
     if (areFieldsValid) {
-      console.log(competitorData)
+      console.log(competitorData);
       const add = await addCompetitors(tournamentState, competitorData);
       if (add) {
         window.alert(
