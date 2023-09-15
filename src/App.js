@@ -9,13 +9,16 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
 import { db } from "./api/Firebase";
+import { Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 const App = () => {
-
+  const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState(false);
 
   useEffect(() => {
@@ -27,29 +30,53 @@ const App = () => {
         queryCollection,
         where("state", "==", true)
       );
-      const docSnap = await getDocs(tournamentState);
 
-      if (docSnap.size > 0) {
-        setResponse(true);
-        cookies.set("tournamentState", true);
-        docSnap.forEach((doc) => {
-          cookies.set("tournamentData", doc.data());
-          cookies.set("tournamentId", doc.id);
-        });
-      } else {
-        cookies.set("tournamentState", false);
-        cookies.remove("tournamentData");
-        cookies.remove("tournamentId");
-      }
+      const unsubscribe = onSnapshot(tournamentState, (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          setResponse(true);
+          querySnapshot.forEach((doc) => {
+            cookies.set("tournamentData", doc.data());
+            cookies.set("tournamentId", doc.id);
+          });
+        } else {
+          setResponse(false);
+          cookies.remove("tournamentData");
+          cookies.remove("tournamentId");
+        }
+        // Cuando los datos se carguen, establece isLoading en falso después de 3 segundos.
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      });
+
+      return () => {
+        unsubscribe();
+      };
     };
 
     fetchData();
   }, []);
 
-  console.log("app", response);
+  // Si isLoading es verdadero, muestra el mensaje de carga, de lo contrario, muestra la aplicación real.
   return (
     <ThemeProvider theme={theme}>
-      <AppRoutes />
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "10rem",
+          }}
+        >
+          <CircularProgress size={100} style={{ color: "orange" }} />
+          <Typography variant="h5" style={{ marginTop: 20, color: "black" }}>
+            Cargando datos...
+          </Typography>
+        </div>
+      ) : (
+        <AppRoutes />
+      )}
     </ThemeProvider>
   );
 };

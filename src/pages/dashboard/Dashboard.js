@@ -37,8 +37,8 @@ import { db } from "../../api/Firebase";
 
 export default function Dashboard() {
   const cookies = new Cookies();
-  const [tournamentState, setTournamentState] = useState();
-  const [tournamentData, setTournamentData] = useState();
+  const [tournamentState, setTournamentState] = useState(null);
+  const [tournamentData, setTournamentData] = useState(null);
   const [tournamentRiders, setTournamentRiders] = useState(null);
   const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,11 +53,16 @@ export default function Dashboard() {
     setTournamentId(tid);
 
     const unsubscribe = onSnapshot(
-      doc(db, "tournaments", "M0jq6HRPfLLB7KcRiDMT"),
+      doc(db, "tournaments", tournamentId),
       (snapshot) => {
-        setTournamentData(snapshot.data());
-        setTournamentRiders(snapshot.data().riders);
-        setIsLoading(false);
+        if (snapshot.exists) {
+          setTournamentData(snapshot.data());
+          setTournamentRiders(snapshot.data().riders);
+          setTournamentState(true);
+          setIsLoading(false);
+        } else {
+          setTournamentState(false);
+        }
       }
     );
 
