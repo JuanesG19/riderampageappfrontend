@@ -44,6 +44,9 @@ export default function AccordionDashboard({ tournamentData }) {
                       disabled: "customInputLabelDisabled",
                     },
                   }}
+                  style={{
+                    color: "#1a1a1a",
+                  }}
                 />
               </Grid>
               {/* Ubicación */}
@@ -59,6 +62,9 @@ export default function AccordionDashboard({ tournamentData }) {
                       disabled: "customInputLabelDisabled",
                     },
                   }}
+                  style={{
+                    color: "#1a1a1a",
+                  }}
                 />
               </Grid>
               {/* Fecha */}
@@ -73,6 +79,9 @@ export default function AccordionDashboard({ tournamentData }) {
                     classes: {
                       disabled: "customInputLabelDisabled",
                     },
+                  }}
+                  style={{
+                    color: "#1a1a1a",
                   }}
                 />
               </Grid>
@@ -93,6 +102,9 @@ export default function AccordionDashboard({ tournamentData }) {
                       disabled: "customInputLabelDisabled",
                     },
                   }}
+                  style={{
+                    color: "#1a1a1a",
+                  }}
                 />
               </Grid>
             </Grid>
@@ -111,6 +123,9 @@ export default function AccordionDashboard({ tournamentData }) {
                       disabled: "customInputLabelDisabled",
                     },
                   }}
+                  style={{
+                    color: "#1a1a1a",
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
@@ -124,6 +139,9 @@ export default function AccordionDashboard({ tournamentData }) {
                     classes: {
                       disabled: "customInputLabelDisabled",
                     },
+                  }}
+                  style={{
+                    color: "#1a1a1a",
                   }}
                 />
               </Grid>
@@ -144,6 +162,9 @@ export default function AccordionDashboard({ tournamentData }) {
                       disabled: "customInputLabelDisabled",
                     },
                   }}
+                  style={{
+                    color: "#1a1a1a",
+                  }}
                 />
               </Grid>
               {/* Modulos */}
@@ -158,6 +179,9 @@ export default function AccordionDashboard({ tournamentData }) {
                     classes: {
                       disabled: "customInputLabelDisabled",
                     },
+                  }}
+                  style={{
+                    color: "#1a1a1a",
                   }}
                 />
               </Grid>
