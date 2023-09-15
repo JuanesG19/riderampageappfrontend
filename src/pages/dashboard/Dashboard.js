@@ -260,6 +260,14 @@ export default function Dashboard() {
                               <span className="puntuacionTitle">Ciudad:</span>{" "}
                               {row.city}
                             </div>
+                            <div>
+                              <span className="puntuacionTitle">Club:</span>{" "}
+                              {row.club}
+                            </div>
+                            <div>
+                              <span className="puntuacionTitle">Redes Sociales:</span>{" "}
+                              {row.socialNetworks}
+                            </div>
                           </div>
                         </TableCell>
 

@@ -108,6 +108,12 @@
   /* Ancho máximo deseado */
 }
 
+.table-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 @media (max-width: 768px) {
   .tableDCTContainer {
     width: 100%;
