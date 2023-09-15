@@ -119,10 +119,10 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="dashboardTableContainer">
-              <div className="headerTableDCT headerTableDCTTitle">
-                COMPETIDORES
-              </div>
               <TableContainer component={Paper} className="tableDCTContainer">
+                <div className="headerTableDCT headerTableDCTTitle">
+                  COMPETIDORES
+                </div>
                 <Table aria-label="simple table" className="responsive-table">
                   <TableHead>
                     <TableRow className="headerTableDCT">
@@ -199,7 +199,7 @@ export default function Dashboard() {
                         align="center"
                         style={{
                           borderColor: "black",
-                          borderWidth: "0 1px 0 0",
+                          borderWidth: "0 0 0 0",
                           borderStyle: "solid",
                         }}
                       >

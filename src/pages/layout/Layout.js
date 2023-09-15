@@ -12,9 +12,12 @@ export default function Layout() {
   const [tournamentState, setTournamentState] = useState(false);
 
   useEffect(() => {
-    const createdTournamentCookie = cookies.get("tournamentState");
-    const parse = JSON.parse(createdTournamentCookie);
-    setTournamentState(parse);
+    const createdTournamentCookie = cookies.get("tournamentData");
+    if (createdTournamentCookie) {
+      setTournamentState(true);
+    } else {
+      setTournamentState(false);
+    }
   }, []);
 
   return (

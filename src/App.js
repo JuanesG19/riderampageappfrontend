@@ -20,6 +20,7 @@ import { CircularProgress } from "@mui/material";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState(false);
+  const [hasTimerRun, setHasTimerRun] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,10 +44,15 @@ const App = () => {
           cookies.remove("tournamentData");
           cookies.remove("tournamentId");
         }
-        // Cuando los datos se carguen, establece isLoading en falso después de 3 segundos.
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 3000);
+
+        // Verifica si el temporizador ya se ha ejecutado antes de configurarlo nuevamente
+        if (!hasTimerRun) {
+          // Cuando los datos se carguen, establece isLoading en falso después de 2 segundos.
+          setTimeout(() => {
+            setIsLoading(false);
+            setHasTimerRun(true); // Marca que el temporizador ya se ha ejecutado
+          }, 2000);
+        }
       });
 
       return () => {
@@ -55,9 +61,8 @@ const App = () => {
     };
 
     fetchData();
-  }, []);
+  }, [hasTimerRun]); // Agrega hasTimerRun como dependencia para que se ejecute cuando cambie
 
-  // Si isLoading es verdadero, muestra el mensaje de carga, de lo contrario, muestra la aplicación real.
   return (
     <ThemeProvider theme={theme}>
       {isLoading ? (

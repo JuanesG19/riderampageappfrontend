@@ -60,7 +60,10 @@
 .tableDCTContainer {
   max-width: 100%;
   margin: 0 auto;
-  border: 1px solid #1a1a1a8f !important;
+  border-right: 1px solid #1a1a1a8f;
+  border-bottom: 1px solid #1a1a1a8f;
+  border-left: 1px solid #1a1a1a8f;
+  border-radius: 0px !important;
 }
 
 .puntuacionTitle {
