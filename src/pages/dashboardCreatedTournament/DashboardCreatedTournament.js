@@ -131,7 +131,7 @@ export default function DashboardCreatedTournament() {
           <div className="dashboardTableContainer">
             <TableContainer component={Paper} className="tableDCTContainer">
               <div className="headerTableDCT headerTableDCTTitle table-title">
-                COMPETIDORES
+                NEW COMPETIDORES
               </div>
               <Table aria-label="simple table" className="responsive-table">
                 <TableHead>
