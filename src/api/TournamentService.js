@@ -82,7 +82,6 @@ export const getRidersById = async (id) => {
     .get()
     .then((doc) => {
       if (doc.exists) {
-        // Si el documento existe, accede a la propiedad "riders"
         const riders = doc.data().riders;
         console.log(riders);
       } else {
@@ -118,7 +117,6 @@ export const deleteRiderFirebase = async (tournamentId, riderId) => {
 
 export const rateRider = async (tournamentId, riderId, lap, rate) => {
   try {
-    // Obtén una referencia al documento del torneo
     const tournamentRef = doc(db, "tournaments", tournamentId);
     const tournamentDoc = await getDoc(tournamentRef);
 
@@ -159,21 +157,31 @@ export const rateRider = async (tournamentId, riderId, lap, rate) => {
           updatedScore.secondScore +
           updatedScore.tirthScore;
 
-        // Actualiza el puntaje del rider en el documento del torneo
         ridersData[riderIndex].score[0] = updatedScore;
 
-        // Actualiza el documento del torneo con el rider modificado
         await updateDoc(tournamentRef, { riders: ridersData });
       } else {
         console.log("Rider no encontrado en el torneo");
-        return null; // Puedes manejar la lógica si el rider no se encuentra
+        return null;
       }
     } else {
       console.log("Torneo no encontrado");
-      return null; // Puedes manejar la lógica si el torneo no se encuentra
+      return null;
     }
   } catch (error) {
     console.error("Error al obtener el puntaje del rider:", error);
-    return null; // Puedes manejar la lógica en caso de error
+    return null;
+  }
+};
+
+export const closeTournament = async () => {
+  const queryRef = query(collection(db, "tournaments"), where("state", "==", true));
+  const tournamentSnapshot = await getDocs(queryRef);
+
+  if (tournamentSnapshot.size > 0) {
+    for (const tournament of tournamentSnapshot.docs) {
+      /* await updateDoc(tournament.ref, { state: false }); */
+      console.log("listo para borrar")
+    }
   }
 };

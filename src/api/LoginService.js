@@ -4,8 +4,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { app } from "./Firebase";
-
+import { app, db } from "./Firebase";
+import { collection, query, where } from "firebase/firestore";
 
 export const loginAuthentication = async (data) => {
   const auth = getAuth(app);

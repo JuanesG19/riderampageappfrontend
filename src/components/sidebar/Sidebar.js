@@ -20,6 +20,7 @@ import Cookies from "universal-cookie";
 import "./SidebarStyles.css";
 import { logOut } from "../../api/LoginService";
 import AddCompetitorDialog from "../../pages/addCompetitorsDialog/AddCompetitorsDialog";
+import { closeTournament } from "../../api/TournamentService";
 
 const Sidebar = ({ open, onClose }) => {
   const [addCompetitorDialogOpen, setAddCompetitorDialogOpen] = useState(false);
@@ -53,6 +54,10 @@ const Sidebar = ({ open, onClose }) => {
 
   const openAddCompetitorDialog = () => {
     setAddCompetitorDialogOpen(true);
+  };
+
+  const closeTournamentMethod = () => {
+    closeTournament();
   };
 
   const list = () => (
@@ -96,7 +101,7 @@ const Sidebar = ({ open, onClose }) => {
         <Divider />
 
         <ListItem>
-          <Link className="linkSidebar" to="/adminUsuarios">
+          <Link className="linkSidebar" onClick={closeTournament}>
             <ListItemButton className="listSidebar">
               <ListItemIcon>
                 <PeopleAltIcon />
