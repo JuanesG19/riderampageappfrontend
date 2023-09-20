@@ -175,13 +175,18 @@ export const rateRider = async (tournamentId, riderId, lap, rate) => {
 };
 
 export const closeTournament = async () => {
-  const queryRef = query(collection(db, "tournaments"), where("state", "==", true));
+  const queryRef = query(
+    collection(db, "tournaments"),
+    where("state", "==", true)
+  );
   const tournamentSnapshot = await getDocs(queryRef);
 
   if (tournamentSnapshot.size > 0) {
     for (const tournament of tournamentSnapshot.docs) {
-      /* await updateDoc(tournament.ref, { state: false }); */
-      console.log("listo para borrar")
+      await updateDoc(tournament.ref, { state: false });
     }
+    return true;
+  } else {
+    return false;
   }
 };

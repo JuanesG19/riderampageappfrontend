@@ -7,7 +7,7 @@ function observeCookie(cookieName, callback) {
       callback(currentValue);
       lastValue = currentValue;
     }
-  }, 1000);
+  }, 500);
 
   return function stopObserving() {
     clearInterval(intervalId);

@@ -46,11 +46,14 @@ export default function Dashboard() {
   const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
 
   useEffect(() => {
-    const tid = cookies.get("tournamentId");
+    let tid = cookies.get("tournamentId");
+
+    if (!tid) {
+      tid = null;
+    }
 
     const stopObserving = observeCookie("tournamentId", (newValue) => {
       setTournamentId(tid);
-      // Actualizar el componente forzando una nueva consulta
       fetchData(tid);
     });
 

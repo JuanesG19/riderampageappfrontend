@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Divider,
@@ -21,11 +21,41 @@ import "./SidebarStyles.css";
 import { logOut } from "../../api/LoginService";
 import AddCompetitorDialog from "../../pages/addCompetitorsDialog/AddCompetitorsDialog";
 import { closeTournament } from "../../api/TournamentService";
+import { observeCookie } from "../../api/CookiesService";
 
 const Sidebar = ({ open, onClose }) => {
   const [addCompetitorDialogOpen, setAddCompetitorDialogOpen] = useState(false);
+  const [tournamentState, setTournamentState] = useState(false);
   const cookies = new Cookies();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const initialValue = cookies.get("tournamentData");
+
+    if (
+      initialValue &&
+      typeof initialValue === "object" &&
+      Object.keys(initialValue).length > 0
+    ) {
+      setTournamentState(true);
+    } else {
+      setTournamentState(false);
+    }
+
+    const stopObserving = observeCookie("tournamentData", (newValue) => {
+      if (newValue) {
+        setTournamentState(true);
+        console.log("Setting tournamentState to true");
+      } else {
+        setTournamentState(false);
+        console.log("Setting tournamentState to false");
+      }
+    });
+
+    return () => {
+      stopObserving(); // Cleanup on unmount
+    };
+  }, []);
 
   const logout = async () => {
     const logout = await logOut();
@@ -56,8 +86,20 @@ const Sidebar = ({ open, onClose }) => {
     setAddCompetitorDialogOpen(true);
   };
 
-  const closeTournamentMethod = () => {
-    closeTournament();
+  const closeTournamentMethod = async () => {
+    if (window.confirm("¿Estás seguro de que desea cerrar el torneo?")) {
+      const close = await closeTournament();
+      if (close) {
+        cookies.remove("tournamentId");
+        cookies.remove("tournamentData");
+        window.alert("Torneo Cerrado!");
+        setTimeout(navigate("/"), 1000);
+      } else {
+        window.alert("Error Cerrando El Torneo!");
+      }
+    } else {
+      window.alert("Error Cerrando El Torneo!");
+    }
   };
 
   const list = () => (
@@ -86,32 +128,38 @@ const Sidebar = ({ open, onClose }) => {
 
         <Divider />
 
-        <ListItem>
-          <ListItemButton
-            className="listSidebar"
-            onClick={openAddCompetitorDialog}
-          >
-            <ListItemIcon>
-              <DesignServicesIcon />
-            </ListItemIcon>
-            Agregar Competidores
-          </ListItemButton>
-        </ListItem>
+        {tournamentState ? (
+          <>
+            <ListItem>
+              <ListItemButton
+                className="listSidebar"
+                onClick={openAddCompetitorDialog}
+              >
+                <ListItemIcon>
+                  <DesignServicesIcon />
+                </ListItemIcon>
+                Agregar Competidores
+              </ListItemButton>
+            </ListItem>
 
-        <Divider />
+            <Divider />
 
-        <ListItem>
-          <Link className="linkSidebar" onClick={closeTournament}>
-            <ListItemButton className="listSidebar">
-              <ListItemIcon>
-                <PeopleAltIcon />
-              </ListItemIcon>
-              Cerrar torneo
-            </ListItemButton>
-          </Link>
-        </ListItem>
+            <ListItem>
+              <Link className="linkSidebar" onClick={closeTournamentMethod}>
+                <ListItemButton className="listSidebar">
+                  <ListItemIcon>
+                    <PeopleAltIcon />
+                  </ListItemIcon>
+                  Cerrar torneo
+                </ListItemButton>
+              </Link>
+            </ListItem>
 
-        <Divider />
+            <Divider />
+          </>
+        ) : (
+          <></>
+        )}
 
         <ListItem onClick={logout}>
           <ListItemButton className="listSidebar">
