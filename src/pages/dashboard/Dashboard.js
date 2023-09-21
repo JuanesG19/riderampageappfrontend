@@ -35,6 +35,7 @@ import AccordionDashboard from "../../components/accordionDashboard/AccordionDas
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../api/Firebase";
 import { observeCookie } from "../../api/CookiesService";
+import ImageSlider from "../../components/imageSlider/ImageSlider";
 
 export default function Dashboard() {
   const cookies = new Cookies();
@@ -378,6 +379,8 @@ export default function Dashboard() {
           </Container>
         </div>
       )}
+
+      {/* <ImageSlider /> */}
     </div>
   );
 }
