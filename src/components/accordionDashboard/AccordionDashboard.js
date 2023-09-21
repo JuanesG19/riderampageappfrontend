@@ -40,12 +40,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.tournamentName}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -58,12 +60,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.location}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -76,12 +80,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.tournamentDate}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -98,12 +104,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.description}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -119,12 +127,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.modality}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -136,12 +146,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.category}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -158,12 +170,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.trackName}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
@@ -176,12 +190,14 @@ export default function AccordionDashboard({ tournamentData }) {
                   value={tournamentData.modules}
                   disabled
                   InputLabelProps={{
-                    classes: {
-                      disabled: "customInputLabelDisabled",
+                    style: {
+                      color: "#1a1a1a",
                     },
                   }}
-                  style={{
-                    color: "#1a1a1a",
+                  InputProps={{
+                    style: {
+                      color: "#1a1a1a",
+                    },
                   }}
                 />
               </Grid>
