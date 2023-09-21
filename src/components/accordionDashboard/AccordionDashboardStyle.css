@@ -36,3 +36,13 @@
   opacity: 1 !important;
   -webkit-text-fill-color: #1a1a1a !important;
 }
+
+.MuiInputBase-input.Mui-disabled {
+  opacity: 1 !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  color: #1a1a1a !important;
+}
+
+.-webkit-text-fill-color {
+  color: #1a1a1a !important;
+}
