@@ -1,0 +1,12 @@
+.sliderBackground {
+  background-color: #494949 !important;
+}
+
+.swiper-slide img {
+  max-width: 100%;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+  justify-content: center !important;
+  text-align: center !important;
+}

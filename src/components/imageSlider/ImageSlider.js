@@ -1,85 +1,77 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import "./ImageSliderStyles.css";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import {
+  EffectCoverflow,
+  Navigation,
+  Pagination,
+  Autoplay,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const images = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bird',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
+import image1 from "../../utils/images/slider/1.jpg";
+import image2 from "../../utils/images/slider/2.jpg";
+import image3 from "../../utils/images/slider/4.png";
+import image4 from "../../utils/images/slider/5.jpg";
+import image5 from "../../utils/images/slider/6.jpg";
+import { Typography } from "@mui/material";
 
 function SwipeableTextMobileStepper() {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <AutoPlaySwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
+    <div className="sliderBackground">
+      {/* <Typography variant="h4" sx={{ mt: 3, mb: 2 }} className="formTitle">
+        NUESTROS PATROCINADORES
+      </Typography> */}
+
+      <Swiper
+        slidesPerView={8}
+        spaceBetween={30}
+        centeredSlides={true}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        autoplay={{
+          delay: 1500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="mySwiper"
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: 255,
-                  display: 'block',
-                  maxWidth: 400,
-                  overflow: 'hidden',
-                  width: '100%',
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
-      </AutoPlaySwipeableViews>
-    </Box>
+        <SwiperSlide className="swiper-slide">
+          <img src={image2} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image1} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image3} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image4} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image5} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image2} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image4} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image5} />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src={image2} />
+        </SwiperSlide>
+      </Swiper>
+    </div>
   );
 }
 

@@ -379,8 +379,7 @@ export default function Dashboard() {
           </Container>
         </div>
       )}
-
-      {/* <ImageSlider /> */}
+      <ImageSlider />
     </div>
   );
 }
