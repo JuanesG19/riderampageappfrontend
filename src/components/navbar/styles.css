@@ -1,5 +1,5 @@
 .navbarContainer {
-  background-color: #1A1A1A !important;
+  background-color: #1a1a1a !important;
 }
 
 .navbarTitle {
@@ -22,12 +22,8 @@
 }
 
 @media (max-width: 600px) {
-
   .navbarTitle {
     text-align: left !important;
     font-size: 1.5rem !important;
   }
-
-
-
 }

@@ -3,10 +3,16 @@
 }
 
 .swiper-slide img {
-  max-width: 100%;
+  max-width: 100% !important;
   max-height: 100px;
   width: auto;
   height: auto;
   justify-content: center !important;
   text-align: center !important;
+}
+
+@media (max-width: 700px) {
+  .swiper-slide img {
+    max-width: 200% !important;
+  }
 }
