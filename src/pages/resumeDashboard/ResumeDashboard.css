@@ -23,6 +23,6 @@
 
 @media (max-width: 700px) {
   .tableResumeContainer {
-    max-width: 90%;
+    max-width: 100%;
   }
 }
