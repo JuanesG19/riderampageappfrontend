@@ -128,7 +128,7 @@ export default function DashboardCreatedTournament() {
             </Button>
           </div>
 
-          <div className="dashboardTableContainer">
+          <div className="dashboardTableContainerCreated">
             <TableContainer component={Paper} className="tableDCTContainer">
               <div className="headerTableDCT headerTableDCTTitle table-title">
                 NEW COMPETIDORES

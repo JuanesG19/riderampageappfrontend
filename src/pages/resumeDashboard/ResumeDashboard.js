@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Navbar from "../../components/navbar/Navbar";
-import Paper from "@mui/material/Paper";
-import { Link, useNavigate } from "react-router-dom";
-import FormControlLabel from "@mui/material/FormControlLabel";
 
-import "./styles.css";
+import "./ResumeDashboard.css";
 import {
   Accordion,
   AccordionDetails,
@@ -13,10 +8,12 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   CircularProgress,
   Container,
   Grid,
   IconButton,
+  Paper,
   Switch,
   Table,
   TableBody,
@@ -28,17 +25,17 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
 import image from "../../utils/images/Logo.png";
+import { doc, onSnapshot } from "firebase/firestore";
+import { observeCookie } from "../../api/CookiesService";
+import { db } from "../../api/Firebase";
 import Cookies from "universal-cookie";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../api/Firebase";
-import { observeCookie } from "../../api/CookiesService";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
 
-export default function Dashboard() {
-  let navigate = useNavigate();
+function ResumeDashboard() {
   const cookies = new Cookies();
   const [tournamentState, setTournamentState] = useState(null);
   const [tournamentData, setTournamentData] = useState(null);
@@ -46,6 +43,7 @@ export default function Dashboard() {
   const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
+  let navigate = useNavigate();
 
   useEffect(() => {
     let tid = cookies.get("tournamentId");
@@ -89,9 +87,10 @@ export default function Dashboard() {
     };
   };
 
-  const resumeDashboard = () => {
-    navigate("/");
-  }
+  const seeMore = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="dashboardContainer">
       <div className="appbarContainer">
@@ -134,32 +133,17 @@ export default function Dashboard() {
             </div>
           ) : (
             <>
-              {tournamentData ? (
-                <AccordionDashboard tournamentData={tournamentData} />
-              ) : (
-                <></>
-              )}
-              <div className="dashboardTableContainer">
-                <TableContainer component={Paper} className="tableDCTContainer">
+              <div className="resumeDashboardTableContainer">
+                <TableContainer
+                  component={Paper}
+                  className="tableResumeContainer"
+                >
                   <div className="headerTableDCT headerTableDCTTitle">
                     COMPETIDORES
                   </div>
                   <Table aria-label="simple table" className="responsive-table">
                     <TableHead>
                       <TableRow className="headerTableDCT">
-                        {/* Salida */}
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 1px 0 0",
-                            borderStyle: "solid",
-                          }}
-                        >
-                          Salida
-                        </TableCell>
-                        {/* Score */}
                         <TableCell
                           className="titles"
                           align="center"
@@ -185,42 +169,12 @@ export default function Dashboard() {
                           Información
                         </TableCell>
 
-                        {/* Puntuacion */}
                         <TableCell
                           className="titles"
                           align="center"
                           style={{
                             borderColor: "black",
-                            borderWidth: "0 0 0 1px",
-                            borderStyle: "solid",
-                          }}
-                        ></TableCell>
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 0 0 0",
-                            borderStyle: "solid",
-                          }}
-                        >
-                          Score
-                        </TableCell>
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 1px 0 0",
-                            borderStyle: "solid",
-                          }}
-                        ></TableCell>
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 0 0 0",
+                            borderWidth: "0 1px 0 1px",
                             borderStyle: "solid",
                           }}
                         >
@@ -236,20 +190,6 @@ export default function Dashboard() {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          {/* Salida */}
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow hidden-mobile points"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 0",
-                              borderStyle: "solid",
-                              width: "30px",
-                            }}
-                          >
-                            1
-                          </TableCell>
-
                           {/* Score */}
                           <TableCell
                             align="center"
@@ -278,10 +218,6 @@ export default function Dashboard() {
                               <span className="puntuacionTitle">Nombre:</span>
                               {row.name}
                               <div>
-                                <span className="puntuacionTitle">Ciudad:</span>{" "}
-                                {row.city}
-                              </div>
-                              <div>
                                 <span className="puntuacionTitle">Club:</span>{" "}
                                 {row.club}
                               </div>
@@ -293,70 +229,15 @@ export default function Dashboard() {
                               </div>
                             </div>
                           </TableCell>
-
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 1px",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            <div>
-                              <div className="puntuacionTitle">Score 1</div>
-                              <div className="puntuacionContent">
-                                {row.score[0].firstScore}
-                              </div>
-                            </div>
-                          </TableCell>
-
-                          {/* Columnas 9-11 */}
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 0",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            <div>
-                              <div className="puntuacionTitle">Score 2</div>
-                              <div className="puntuacionContent">
-                                {" "}
-                                {row.score[0].secondScore}
-                              </div>
-                            </div>
-                          </TableCell>
-
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 0",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            <div>
-                              <div className="puntuacionTitle">Score 3</div>
-                              <div className="puntuacionContent">
-                                {" "}
-                                {row.score[0].tirthScore}
-                              </div>
-                            </div>
-                          </TableCell>
-
                           <TableCell
                             align="center"
                             className="dCTTableRow hidden-mobile "
                             style={{
                               borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 0",
+                              borderWidth: "0 1px 1px 1px",
                               borderStyle: "solid",
                               fontSize: "20px",
-                              width: "30px",
+                              width: "60px",
                             }}
                           >
                             {row.score[0].finalScore}
@@ -384,15 +265,14 @@ export default function Dashboard() {
           </Container>
         </div>
       )}
-
       <div className="seeMoreButton">
         <Button
-          onClick={resumeDashboard}
+          onClick={seeMore}
           color="primary"
           variant="contained"
           className="addCompetitorsDialogButtons"
         >
-          Ver Resumen
+          Ver Mas Detalles
         </Button>
       </div>
 
@@ -400,3 +280,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default ResumeDashboard;

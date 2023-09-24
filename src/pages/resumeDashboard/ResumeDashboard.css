@@ -1,0 +1,22 @@
+.tableResumeContainer {
+  max-width: 60%;
+  margin: 0 auto;
+  border-right: 1px solid #1a1a1a8f;
+  border-bottom: 1px solid #1a1a1a8f;
+  border-left: 1px solid #1a1a1a8f;
+  border-radius: 0px !important;
+}
+
+.resumeDashboardTableContainer {
+  max-height: 80vh;
+  padding: 10px 30px 0 30px !important;
+  padding-bottom: 30px !important;
+}
+
+.seeMoreButton {
+  padding: 0px 30px 30px 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 300px;
+}

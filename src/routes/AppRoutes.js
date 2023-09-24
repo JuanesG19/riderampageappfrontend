@@ -7,9 +7,11 @@ import GuardedRoute from "./GuardedRoute";
 import CreateTournament from "../pages/createTournament/CreateTournament";
 import AddCompetitors from "../pages/addCompetitorsDialog/AddCompetitorsDialog";
 import Layout from "../pages/layout/Layout";
+import ResumeDashboard from "../pages/resumeDashboard/ResumeDashboard";
 
 const routes = [
-  { path: "/", element: <Dashboard /> },
+  { path: "/", element: <ResumeDashboard /> },
+  { path: "/dashboard", element: <Dashboard /> },
   { path: "/login", element: <Login /> },
   {
     path: "/createTournament",

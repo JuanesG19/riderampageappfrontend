@@ -37,7 +37,7 @@ function SwipeableTextMobileStepper() {
           clickable: true,
         }}
         autoplay={{
-          delay: 1500,
+          delay: 1000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}
