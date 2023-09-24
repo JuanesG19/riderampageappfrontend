@@ -138,11 +138,18 @@ function ResumeDashboard() {
                   component={Paper}
                   className="tableResumeContainer"
                 >
-                  <div className="headerTableDCT headerTableDCTTitle">
-                    COMPETIDORES
-                  </div>
                   <Table aria-label="simple table" className="responsive-table">
                     <TableHead>
+                      {/* Titulo */}
+                      <TableRow className="tableTitleContainerDashboard">
+                        <TableCell
+                          align="center"
+                          colSpan={12}
+                          className="headerTableDCT headerTableDCTTitle"
+                        >
+                          <h2 className="tableTitleDashboard">COMPETIDORES</h2>
+                        </TableCell>
+                      </TableRow>
                       <TableRow className="headerTableDCT">
                         <TableCell
                           className="titles"

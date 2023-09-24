@@ -112,6 +112,18 @@
   color: white !important;
 }
 
+.tableTitleDashboard {
+  font-weight: bold !important;
+}
+
+.css-1ndpvdd-MuiTableCell-root {
+  border-bottom: 1px solid black !important;
+}
+
+.tableTitleContainerDashboard {
+  border: 1px solid black !important;
+}
+
 @media (max-width: 600px) {
   .titleAppbar {
     font-size: 1.5rem !important;
