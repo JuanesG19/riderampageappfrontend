@@ -8,6 +8,7 @@ import { collection, query, where } from "firebase/firestore";
 import { db } from "../../api/Firebase";
 import { observeCookie } from "../../api/CookiesService";
 import { FormatColorResetRounded } from "@mui/icons-material";
+import ParticlesBg from "../../components/Particles/ParticlesBg";
 
 export default function Layout() {
   const cookies = new Cookies();
@@ -45,6 +46,7 @@ export default function Layout() {
 
   return (
     <>
+      <ParticlesBg />
       {tournamentState ? <DashboardCreatedTournament /> : <CreateTournament />}
     </>
   );

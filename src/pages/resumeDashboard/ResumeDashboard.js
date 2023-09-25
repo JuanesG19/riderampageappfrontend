@@ -34,6 +34,7 @@ import { db } from "../../api/Firebase";
 import Cookies from "universal-cookie";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
+import ParticlesBg from "../../components/Particles/ParticlesBg";
 
 function ResumeDashboard() {
   const cookies = new Cookies();
@@ -92,199 +93,207 @@ function ResumeDashboard() {
   };
 
   return (
-    <div className="dashboardContainer">
-      <div className="appbarContainer">
-        <AppBar position="static">
-          <Toolbar className="appbar">
-            <img src={image} alt="Logo" className="logo" />
-            <Typography variant="h4" className="titleAppbar">
-              TABLA DE POSICIONES
-            </Typography>
-
-            <Link to="/layout">
-              <IconButton edge="end" color="inherit" className="icon">
-                <Avatar sx={{}}>
-                  <LockIcon />
-                </Avatar>
-              </IconButton>
-            </Link>
-          </Toolbar>
-        </AppBar>
-      </div>
-
-      {tournamentState ? (
-        <>
-          {isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                paddingTop: "10rem",
-              }}
-            >
-              <CircularProgress size={100} style={{ color: "orange" }} />
-              <Typography
-                variant="h5"
-                style={{ marginTop: 20, color: "white" }}
-              >
-                Cargando datos...
+    <>
+      <ParticlesBg style={{ zindex: -1 }} />
+      <div className="dashboardContainer">
+        <div className="appbarContainer">
+          <AppBar position="static">
+            <Toolbar className="appbar">
+              <img src={image} alt="Logo" className="logo" />
+              <Typography variant="h4" className="titleAppbar">
+                TABLA DE POSICIONES
               </Typography>
-            </div>
-          ) : (
-            <>
-              <div className="resumeDashboardTableContainer">
-                <TableContainer
-                  component={Paper}
-                  className="tableResumeContainer"
+
+              <Link to="/layout">
+                <IconButton edge="end" color="inherit" className="icon">
+                  <Avatar sx={{}}>
+                    <LockIcon />
+                  </Avatar>
+                </IconButton>
+              </Link>
+            </Toolbar>
+          </AppBar>
+        </div>
+
+        {tournamentState ? (
+          <>
+            {isLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  paddingTop: "10rem",
+                }}
+              >
+                <CircularProgress size={100} style={{ color: "orange" }} />
+                <Typography
+                  variant="h5"
+                  style={{ marginTop: 20, color: "white" }}
                 >
-                  <Table aria-label="simple table" className="responsive-table">
-                    <TableHead>
-                      {/* Titulo */}
-                      <TableRow className="tableTitleContainerDashboard">
-                        <TableCell
-                          align="center"
-                          colSpan={12}
-                          className="headerTableDCT headerTableDCTTitle"
-                        >
-                          <h2 className="tableTitleDashboard">COMPETIDORES</h2>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className="headerTableDCT">
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 1px 0 1px",
-                            borderStyle: "solid",
-                          }}
-                        >
-                          Ranking
-                        </TableCell>
-                        {/* Información */}
-
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 0 0 0",
-                            borderStyle: "solid",
-                          }}
-                        >
-                          Información
-                        </TableCell>
-
-                        <TableCell
-                          className="titles"
-                          align="center"
-                          style={{
-                            borderColor: "black",
-                            borderWidth: "0 1px 0 1px",
-                            borderStyle: "solid",
-                          }}
-                        >
-                          Puntaje Final
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {tournamentRiders.map((row) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          {/* Score */}
+                  Cargando datos...
+                </Typography>
+              </div>
+            ) : (
+              <>
+                <div className="resumeDashboardTableContainer">
+                  <TableContainer
+                    component={Paper}
+                    className="tableResumeContainer"
+                  >
+                    <Table
+                      aria-label="simple table"
+                      className="responsive-table"
+                    >
+                      <TableHead>
+                        {/* Titulo */}
+                        <TableRow className="tableTitleContainerDashboard">
                           <TableCell
                             align="center"
-                            className="dCTTableRow hidden-mobile points"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 0",
-                              borderStyle: "solid",
-                              width: "30px",
-                            }}
+                            colSpan={12}
+                            className="headerTableDCT headerTableDCTTitle"
                           >
-                            2
-                          </TableCell>
-
-                          {/* Columnas 3-5 */}
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow"
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 0 1px 0",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            <div>
-                              <span className="puntuacionTitle">Nombre:</span>
-                              {row.name}
-                              <div>
-                                <span className="puntuacionTitle">Club:</span>{" "}
-                                {row.club}
-                              </div>
-                              <div>
-                                <span className="puntuacionTitle">
-                                  Redes Sociales:
-                                </span>{" "}
-                                {row.socialNetworks}
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className="dCTTableRow hidden-mobile "
-                            style={{
-                              borderColor: "#ff7f00",
-                              borderWidth: "0 1px 1px 1px",
-                              borderStyle: "solid",
-                              fontSize: "20px",
-                              width: "60px",
-                            }}
-                          >
-                            {row.score[0].finalScore}
+                            <h2 className="tableTitleDashboard">
+                              COMPETIDORES
+                            </h2>
                           </TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </div>
-            </>
-          )}
-        </>
-      ) : (
-        <div className="rootTournamentNotFound">
-          <Container maxWidth="sm" className="paperTournamentNotFound">
-            <img
-              src={image}
-              alt="No existe ningún torneo"
-              className="imageTournamentNotFound"
-            />
-            <Typography className="textTournamentNotFound">
-              NO EXISTE NINGUN TORNEO ACTIVO
-            </Typography>
-          </Container>
-        </div>
-      )}
-      <div className="seeMoreButton">
-        <Button
-          onClick={seeMore}
-          color="primary"
-          variant="contained"
-          className="addCompetitorsDialogButtons"
-        >
-          Ver Mas Detalles
-        </Button>
-      </div>
+                        <TableRow className="headerTableDCT">
+                          <TableCell
+                            className="titles"
+                            align="center"
+                            style={{
+                              borderColor: "black",
+                              borderWidth: "0 1px 0 1px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            Ranking
+                          </TableCell>
+                          {/* Información */}
 
-      <ImageSlider />
-    </div>
+                          <TableCell
+                            className="titles"
+                            align="center"
+                            style={{
+                              borderColor: "black",
+                              borderWidth: "0 0 0 0",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            Información
+                          </TableCell>
+
+                          <TableCell
+                            className="titles"
+                            align="center"
+                            style={{
+                              borderColor: "black",
+                              borderWidth: "0 1px 0 1px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            Puntaje Final
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {tournamentRiders.map((row) => (
+                          <TableRow
+                            key={row.name}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            {/* Score */}
+                            <TableCell
+                              align="center"
+                              className="dCTTableRow hidden-mobile points"
+                              style={{
+                                borderColor: "#ff7f00",
+                                borderWidth: "0 1px 1px 0",
+                                borderStyle: "solid",
+                                width: "30px",
+                              }}
+                            >
+                              2
+                            </TableCell>
+
+                            {/* Columnas 3-5 */}
+                            <TableCell
+                              align="center"
+                              className="dCTTableRow"
+                              style={{
+                                borderColor: "#ff7f00",
+                                borderWidth: "0 0 1px 0",
+                                borderStyle: "solid",
+                              }}
+                            >
+                              <div>
+                                <span className="puntuacionTitle">Nombre:</span>
+                                {row.name}
+                                <div>
+                                  <span className="puntuacionTitle">Club:</span>{" "}
+                                  {row.club}
+                                </div>
+                                <div>
+                                  <span className="puntuacionTitle">
+                                    Redes Sociales:
+                                  </span>{" "}
+                                  {row.socialNetworks}
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className="dCTTableRow hidden-mobile "
+                              style={{
+                                borderColor: "#ff7f00",
+                                borderWidth: "0 1px 1px 1px",
+                                borderStyle: "solid",
+                                fontSize: "20px",
+                                width: "60px",
+                              }}
+                            >
+                              {row.score[0].finalScore}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="rootTournamentNotFound">
+            <Container maxWidth="sm" className="paperTournamentNotFound">
+              <img
+                src={image}
+                alt="No existe ningún torneo"
+                className="imageTournamentNotFound"
+              />
+              <Typography className="textTournamentNotFound">
+                NO EXISTE NINGUN TORNEO ACTIVO
+              </Typography>
+            </Container>
+          </div>
+        )}
+        <div className="seeMoreButton">
+          <Button
+            onClick={seeMore}
+            color="primary"
+            variant="contained"
+            className="addCompetitorsDialogButtons"
+          >
+            Ver Mas Detalles
+          </Button>
+        </div>
+
+        <ImageSlider />
+      </div>
+    </>
   );
 }
 

@@ -36,6 +36,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../api/Firebase";
 import { observeCookie } from "../../api/CookiesService";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
+import ParticlesBg from "../../components/Particles/ParticlesBg";
 
 export default function Dashboard() {
   let navigate = useNavigate();
@@ -94,6 +95,7 @@ export default function Dashboard() {
   };
   return (
     <div className="dashboardContainer">
+      <ParticlesBg />
       <div className="appbarContainer">
         <AppBar position="static">
           <Toolbar className="appbar">
