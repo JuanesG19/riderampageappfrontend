@@ -130,11 +130,19 @@ export default function DashboardCreatedTournament() {
 
           <div className="dashboardTableContainerCreated">
             <TableContainer component={Paper} className="tableDCTContainer">
-              <div className="headerTableDCT headerTableDCTTitle table-title">
-                NEW COMPETIDORES
-              </div>
+
               <Table aria-label="simple table" className="responsive-table">
                 <TableHead>
+                  {/* Titulo */}
+                  <TableRow className="tableTitleContainerDashboard">
+                    <TableCell
+                      align="center"
+                      colSpan={12}
+                      className="headerTableDCT headerTableDCTTitle"
+                    >
+                      <h2 className="tableTitleDashboard">COMPETIDORES</h2>
+                    </TableCell>
+                  </TableRow>
                   <TableRow className="headerTableDCT">
                     {/* Salida */}
                     <TableCell
@@ -142,7 +150,7 @@ export default function DashboardCreatedTournament() {
                       align="center"
                       style={{
                         borderColor: "black",
-                        borderWidth: "0 1px 0 0",
+                        borderWidth: "0 1px 0 1px",
                         borderStyle: "solid",
                       }}
                     >
@@ -236,7 +244,7 @@ export default function DashboardCreatedTournament() {
                       align="center"
                       style={{
                         borderColor: "black",
-                        borderWidth: "0 0 0 0",
+                        borderWidth: "0 1px 0 0",
                         borderStyle: "solid",
                       }}
                     >

@@ -114,6 +114,7 @@
 
 .tableTitleDashboard {
   font-weight: bold !important;
+  padding: 0 !important;
 }
 
 .css-1ndpvdd-MuiTableCell-root {
@@ -122,6 +123,11 @@
 
 .tableTitleContainerDashboard {
   border: 1px solid black !important;
+}
+
+.headerTableDCTTitle {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 @media (max-width: 600px) {
