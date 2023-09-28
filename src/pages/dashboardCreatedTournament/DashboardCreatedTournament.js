@@ -45,17 +45,29 @@ export default function DashboardCreatedTournament() {
   const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalScoreOpen, setIsModalScoreOpen] = useState(false);
+  const [riderRanking, setRiderRanking] = useState([]);
 
   useEffect(() => {
     const tid = cookies.get("tournamentId");
     setTournamentId(tid);
 
     const unsubscribe = onSnapshot(doc(db, "tournaments", tid), (snapshot) => {
+      // Ordenar los riders por finalScore de mayor a menor
+      const sortedRiders = snapshot
+        .data()
+        .riders.slice()
+        .sort((a, b) => {
+          return b.score[0].finalScore - a.score[0].finalScore;
+        });
+
+      // Calcular el ranking
+      const ranking = sortedRiders.map((rider, index) => index + 1);
+
       setTournamentData(snapshot.data());
-      setTournamentRiders(snapshot.data().riders);
+      setTournamentRiders(sortedRiders);
+      setRiderRanking(ranking);
       setIsLoading(false);
     });
 
@@ -63,6 +75,33 @@ export default function DashboardCreatedTournament() {
       unsubscribe();
     };
   }, []);
+
+  const getSalida = (rider) => {
+    const firstScores = tournamentRiders.map(
+      (rider) => rider.score[0].firstScore
+    );
+    const sortedFirstScores = [...firstScores].sort((a, b) => b - a);
+    const riderFirstScore = rider.score[0].firstScore;
+
+    // Calcular la posición de salida
+    let salida = sortedFirstScores.indexOf(riderFirstScore) + 1;
+
+    // Verificar si hay otros competidores con el mismo "firstScore"
+    const countSameFirstScore = firstScores.filter(
+      (score) => score === riderFirstScore
+    ).length;
+
+    // Si hay más de un competidor con el mismo "firstScore", mostrarlos en orden de aparición
+    if (countSameFirstScore > 1) {
+      const sameFirstScoreRiders = tournamentRiders.filter(
+        (r) => r.score[0].firstScore === riderFirstScore
+      );
+      const indexInSameFirstScoreRiders = sameFirstScoreRiders.indexOf(rider);
+      salida += indexInSameFirstScoreRiders;
+    }
+
+    return salida;
+  };
 
   const addRider = () => {
     setIsModalOpen(true);
@@ -130,7 +169,6 @@ export default function DashboardCreatedTournament() {
 
           <div className="dashboardTableContainerCreated">
             <TableContainer component={Paper} className="tableDCTContainer">
-
               <Table aria-label="simple table" className="responsive-table">
                 <TableHead>
                   {/* Titulo */}
@@ -144,18 +182,6 @@ export default function DashboardCreatedTournament() {
                     </TableCell>
                   </TableRow>
                   <TableRow className="headerTableDCT">
-                    {/* Salida */}
-                    <TableCell
-                      className="titles"
-                      align="center"
-                      style={{
-                        borderColor: "black",
-                        borderWidth: "0 1px 0 1px",
-                        borderStyle: "solid",
-                      }}
-                    >
-                      Salida
-                    </TableCell>
                     {/* Score */}
                     <TableCell
                       className="titles"
@@ -167,6 +193,19 @@ export default function DashboardCreatedTournament() {
                       }}
                     >
                       Ranking
+                    </TableCell>
+
+                    {/* Salida */}
+                    <TableCell
+                      className="titles"
+                      align="center"
+                      style={{
+                        borderColor: "black",
+                        borderWidth: "0 1px 0 1px",
+                        borderStyle: "solid",
+                      }}
+                    >
+                      Salida
                     </TableCell>
                     {/* Información */}
                     <TableCell
@@ -258,20 +297,6 @@ export default function DashboardCreatedTournament() {
                       key={row.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {/* Salida */}
-                      <TableCell
-                        align="center"
-                        className="dCTTableRow hidden-mobile points"
-                        style={{
-                          borderColor: "#ff7f00",
-                          borderWidth: "0 1px 1px 0",
-                          borderStyle: "solid",
-                          width: "30px",
-                        }}
-                      >
-                        1
-                      </TableCell>
-
                       {/* Score */}
                       <TableCell
                         align="center"
@@ -283,7 +308,21 @@ export default function DashboardCreatedTournament() {
                           width: "30px",
                         }}
                       >
-                        2
+                        {riderRanking[tournamentRiders.indexOf(row)]}
+                      </TableCell>
+
+                      {/* Salida */}
+                      <TableCell
+                        align="center"
+                        className="dCTTableRow hidden-mobile points"
+                        style={{
+                          borderColor: "#ff7f00",
+                          borderWidth: "0 1px 1px 0",
+                          borderStyle: "solid",
+                          width: "30px",
+                        }}
+                      >
+                        {getSalida(row)}
                       </TableCell>
 
                       {/* Columnas 3-5 */}

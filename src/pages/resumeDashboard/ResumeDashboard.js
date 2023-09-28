@@ -44,6 +44,8 @@ function ResumeDashboard() {
   const [riderId, setRiderId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
+  const [riderRanking, setRiderRanking] = useState([]);
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -73,8 +75,18 @@ function ResumeDashboard() {
     const unsubscribe = onSnapshot(tournamentRef, (snapshot) => {
       if (snapshot.exists()) {
         const tournamentData = snapshot.data();
+
+        // Ordenar los riders por finalScore de mayor a menor
+        const sortedRiders = tournamentData.riders.slice().sort((a, b) => {
+          return b.score[0].finalScore - a.score[0].finalScore;
+        });
+
+        // Calcular el ranking
+        const ranking = sortedRiders.map((rider, index) => index + 1);
+
         setTournamentData(tournamentData);
-        setTournamentRiders(tournamentData.riders);
+        setTournamentRiders(sortedRiders);
+        setRiderRanking(ranking);
         setTournamentState(tournamentData.state);
         setIsLoading(false);
       } else {
@@ -216,7 +228,7 @@ function ResumeDashboard() {
                                 width: "30px",
                               }}
                             >
-                              2
+                              {riderRanking[tournamentRiders.indexOf(row)]}
                             </TableCell>
 
                             {/* Columnas 3-5 */}
