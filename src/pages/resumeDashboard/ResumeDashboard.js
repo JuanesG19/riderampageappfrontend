@@ -35,6 +35,7 @@ import Cookies from "universal-cookie";
 import AccordionDashboard from "../../components/accordionDashboard/AccordionDashboard";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
 import ParticlesBg from "../../components/Particles/ParticlesBg";
+import Footer from "../../components/footer/Footer";
 
 function ResumeDashboard() {
   const cookies = new Cookies();
@@ -312,6 +313,7 @@ function ResumeDashboard() {
         </div>
 
         <ImageSlider />
+        <Footer />
       </div>
     </>
   );

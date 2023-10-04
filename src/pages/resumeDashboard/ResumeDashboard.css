@@ -15,8 +15,7 @@
 }
 
 .resumeDashboardTableContainer {
-  max-height: 80vh;
-  padding: 10px 30px 0 30px !important;
+  padding: 10px 15px 0 15px !important;
   padding-bottom: 30px !important;
   display: flex;
   flex-direction: column;

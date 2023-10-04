@@ -3,16 +3,6 @@
   padding: 0 !important;
 }
 
-.fullscreen-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 12vh;
-  background-color: #1a1a1a;
-  color: white;
-}
-
 .text {
   text-align: center;
   font-size: 3rem;
@@ -74,8 +64,10 @@
 }
 
 .dashboardTableContainer {
-  max-height: 80vh;
-  padding: 10px 30px 20px 30px !important;
+  padding: 10px 15px 0 15px !important;
+  padding-bottom: 30px !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .rootTournamentNotFound {
@@ -88,10 +80,8 @@
 
 .paperTournamentNotFound {
   padding: 8px;
-  /* Ajusta el padding según sea necesario */
   text-align: center;
   background-color: transparent;
-  /* Fondo transparente */
 }
 
 .imageTournamentNotFound {

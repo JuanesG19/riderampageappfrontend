@@ -37,6 +37,7 @@ import { db } from "../../api/Firebase";
 import { observeCookie } from "../../api/CookiesService";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
 import ParticlesBg from "../../components/Particles/ParticlesBg";
+import Footer from "../../components/footer/Footer";
 
 export default function Dashboard() {
   let navigate = useNavigate();
@@ -48,7 +49,6 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [tournamentId, setTournamentId] = useState(cookies.get("tournamentId"));
   const [riderRanking, setRiderRanking] = useState([]);
-
 
   useEffect(() => {
     let tid = cookies.get("tournamentId");
@@ -103,7 +103,9 @@ export default function Dashboard() {
   };
 
   const getSalida = (rider) => {
-    const firstScores = tournamentRiders.map((rider) => rider.score[0].firstScore);
+    const firstScores = tournamentRiders.map(
+      (rider) => rider.score[0].firstScore
+    );
     const sortedFirstScores = [...firstScores].sort((a, b) => b - a);
     const riderFirstScore = rider.score[0].firstScore;
 
@@ -111,11 +113,15 @@ export default function Dashboard() {
     let salida = sortedFirstScores.indexOf(riderFirstScore) + 1;
 
     // Verificar si hay otros competidores con el mismo "firstScore"
-    const countSameFirstScore = firstScores.filter(score => score === riderFirstScore).length;
+    const countSameFirstScore = firstScores.filter(
+      (score) => score === riderFirstScore
+    ).length;
 
     // Si hay más de un competidor con el mismo "firstScore", mostrarlos en orden de aparición
     if (countSameFirstScore > 1) {
-      const sameFirstScoreRiders = tournamentRiders.filter(r => r.score[0].firstScore === riderFirstScore);
+      const sameFirstScoreRiders = tournamentRiders.filter(
+        (r) => r.score[0].firstScore === riderFirstScore
+      );
       const indexInSameFirstScoreRiders = sameFirstScoreRiders.indexOf(rider);
       salida += indexInSameFirstScoreRiders;
     }
@@ -441,6 +447,7 @@ export default function Dashboard() {
       </div>
 
       <ImageSlider />
+      <Footer />
     </div>
   );
 }
