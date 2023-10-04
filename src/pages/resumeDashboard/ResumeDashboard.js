@@ -149,131 +149,139 @@ function ResumeDashboard() {
             ) : (
               <>
                 <div className="resumeDashboardTableContainer">
-                  <TableContainer
-                    component={Paper}
-                    className="tableResumeContainer"
-                  >
-                    <Table
-                      aria-label="simple table"
-                      className="responsive-table"
+                  <div className="tableAndButtonContainer">
+                    <TableContainer
+                      component={Paper}
+                      className="tableResumeContainer"
                     >
-                      <TableHead>
-                        {/* Titulo */}
-                        <TableRow className="tableTitleContainerDashboard">
-                          <TableCell
-                            align="center"
-                            colSpan={12}
-                            className="headerTableDCT headerTableDCTTitle"
-                          >
-                            <h2 className="tableTitleDashboard">
-                              COMPETIDORES
-                            </h2>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="headerTableDCT">
-                          <TableCell
-                            className="titles"
-                            align="center"
-                            style={{
-                              borderColor: "black",
-                              borderWidth: "0 1px 0 1px",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            Ranking
-                          </TableCell>
-                          {/* Información */}
-
-                          <TableCell
-                            className="titles"
-                            align="center"
-                            style={{
-                              borderColor: "black",
-                              borderWidth: "0 0 0 0",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            Información
-                          </TableCell>
-
-                          <TableCell
-                            className="titles"
-                            align="center"
-                            style={{
-                              borderColor: "black",
-                              borderWidth: "0 1px 0 1px",
-                              borderStyle: "solid",
-                            }}
-                          >
-                            Puntaje Final
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {tournamentRiders.map((row) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            {/* Score */}
+                      <Table
+                        aria-label="simple table"
+                        className="responsive-table"
+                      >
+                        <TableHead>
+                          {/* Titulo */}
+                          <TableRow className="tableTitleContainerDashboard">
                             <TableCell
                               align="center"
-                              className="dCTTableRow hidden-mobile points"
-                              style={{
-                                borderColor: "#ff7f00",
-                                borderWidth: "0 1px 1px 0",
-                                borderStyle: "solid",
-                                width: "30px",
-                              }}
+                              colSpan={12}
+                              className="headerTableDCT headerTableDCTTitle"
                             >
-                              {riderRanking[tournamentRiders.indexOf(row)]}
-                            </TableCell>
-
-                            {/* Columnas 3-5 */}
-                            <TableCell
-                              align="center"
-                              className="dCTTableRow"
-                              style={{
-                                borderColor: "#ff7f00",
-                                borderWidth: "0 0 1px 0",
-                                borderStyle: "solid",
-                              }}
-                            >
-                              <div>
-                                <span className="puntuacionTitle">Nombre:</span>
-                                {row.name}
-                                <div>
-                                  <span className="puntuacionTitle">Club:</span>{" "}
-                                  {row.club}
-                                </div>
-                                <div>
-                                  <span className="puntuacionTitle">
-                                    Redes Sociales:
-                                  </span>{" "}
-                                  {row.socialNetworks}
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              className="dCTTableRow hidden-mobile "
-                              style={{
-                                borderColor: "#ff7f00",
-                                borderWidth: "0 1px 1px 1px",
-                                borderStyle: "solid",
-                                fontSize: "20px",
-                                width: "60px",
-                              }}
-                            >
-                              {row.score[0].finalScore}
+                              <h2 className="tableTitleDashboard">
+                                COMPETIDORES
+                              </h2>
                             </TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                          <TableRow className="headerTableDCT">
+                            <TableCell
+                              className="titles"
+                              align="center"
+                              style={{
+                                borderColor: "black",
+                                borderWidth: "0 1px 0 1px",
+                                borderStyle: "solid",
+                              }}
+                            >
+                              Ranking
+                            </TableCell>
+                            {/* Información */}
+
+                            <TableCell
+                              className="titles"
+                              align="center"
+                              style={{
+                                borderColor: "black",
+                                borderWidth: "0 0 0 0",
+                                borderStyle: "solid",
+                              }}
+                            >
+                              Información
+                            </TableCell>
+
+                            <TableCell
+                              className="titles"
+                              align="center"
+                              style={{
+                                borderColor: "black",
+                                borderWidth: "0 1px 0 1px",
+                                borderStyle: "solid",
+                              }}
+                            >
+                              Puntaje Final
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {tournamentRiders.map((row) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              {/* Score */}
+                              <TableCell
+                                align="center"
+                                className="dCTTableRow hidden-mobile points"
+                                style={{
+                                  borderColor: "#ff7f00",
+                                  borderWidth: "0 1px 1px 0",
+                                  borderStyle: "solid",
+                                  width: "30px",
+                                }}
+                              >
+                                {riderRanking[tournamentRiders.indexOf(row)]}
+                              </TableCell>
+
+                              {/* Columnas 3-5 */}
+                              <TableCell
+                                align="center"
+                                className="dCTTableRow"
+                                style={{
+                                  borderColor: "#ff7f00",
+                                  borderWidth: "0 0 1px 0",
+                                  borderStyle: "solid",
+                                }}
+                              >
+                                <div>
+                                  <span className="puntuacionTitle">
+                                    Nombre:
+                                  </span>
+                                  {row.name}
+                                  <div>
+                                    <span className="puntuacionTitle">
+                                      Club:
+                                    </span>{" "}
+                                    {row.club}
+                                  </div>
+                                  <div>
+                                    <span className="puntuacionTitle">
+                                      Redes Sociales:
+                                    </span>{" "}
+                                    {row.socialNetworks}
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                className="dCTTableRow hidden-mobile "
+                                style={{
+                                  borderColor: "#ff7f00",
+                                  borderWidth: "0 1px 1px 1px",
+                                  borderStyle: "solid",
+                                  fontSize: "20px",
+                                  width: "60px",
+                                }}
+                              >
+                                {row.score[0].finalScore}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </div>
                 </div>
               </>
             )}

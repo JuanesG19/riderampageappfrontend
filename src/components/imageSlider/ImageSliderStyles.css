@@ -2,17 +2,33 @@
   background-color: #494949 !important;
 }
 
+.swiper {
+  display: flex !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
 .swiper-slide img {
   max-width: 100% !important;
   max-height: 100px;
-  width: auto;
   height: auto;
   justify-content: center !important;
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.mySwiper {
+  display: flex;
+  align-items: center !important;
   text-align: center !important;
 }
 
 @media (max-width: 700px) {
   .swiper-slide img {
     max-width: 200% !important;
+  }
+
+  img {
+    width: 25vw;
   }
 }
