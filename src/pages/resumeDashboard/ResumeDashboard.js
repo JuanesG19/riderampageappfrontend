@@ -57,8 +57,8 @@ function ResumeDashboard() {
     }
 
     const stopObserving = observeCookie("tournamentId", (newValue) => {
-      setTournamentId(tid);
-      fetchData(tid);
+      setTournamentId(newValue); // Actualizar el valor de tournamentId
+      fetchData(newValue);
     });
 
     if (tid) {
@@ -71,25 +71,34 @@ function ResumeDashboard() {
   }, []);
 
   const fetchData = (tid) => {
+    if (!tid) {
+      console.error("ID del torneo nulo o no válido");
+      setIsLoading(false);
+      return;
+    }
+
     const tournamentRef = doc(db, "tournaments", tid);
 
     const unsubscribe = onSnapshot(tournamentRef, (snapshot) => {
       if (snapshot.exists()) {
         const tournamentData = snapshot.data();
 
-        // Ordenar los riders por finalScore de mayor a menor
-        const sortedRiders = tournamentData.riders.slice().sort((a, b) => {
-          return b.score[0].finalScore - a.score[0].finalScore;
-        });
+        if (tournamentData && tournamentData.riders) {
+          const sortedRiders = tournamentData.riders.slice().sort((a, b) => {
+            return b.score[0].finalScore - a.score[0].finalScore;
+          });
 
-        // Calcular el ranking
-        const ranking = sortedRiders.map((rider, index) => index + 1);
+          const ranking = sortedRiders.map((rider, index) => index + 1);
 
-        setTournamentData(tournamentData);
-        setTournamentRiders(sortedRiders);
-        setRiderRanking(ranking);
-        setTournamentState(tournamentData.state);
-        setIsLoading(false);
+          setTournamentData(tournamentData);
+          setTournamentRiders(sortedRiders);
+          setRiderRanking(ranking);
+          setTournamentState(tournamentData.state);
+          setIsLoading(false);
+        } else {
+          // Manejar el caso en el que los datos de los jinetes sean nulos o no válidos
+          setIsLoading(false);
+        }
       } else {
         setTournamentState(false);
         setIsLoading(false);

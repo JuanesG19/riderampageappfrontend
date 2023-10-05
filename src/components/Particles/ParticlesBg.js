@@ -32,7 +32,7 @@ const ParticlesBg = () => {
               quantity: 6,
             },
             repulse: {
-              distance: 200,
+              distance: 30,
               duration: 0.4,
             },
           },
@@ -63,7 +63,7 @@ const ParticlesBg = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 90,
           },
           opacity: {
             value: 0.05,
