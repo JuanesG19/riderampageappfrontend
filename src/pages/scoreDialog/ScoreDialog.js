@@ -36,9 +36,10 @@ export default function ScoreDialog({ open, onClose, riderId }) {
     );
     if (areFieldsValid) {
       let modifiedScore = null;
-
+      const tId = cookies.get("tournamentId");
+      console.log(tId)
       await rateRider(
-        "M0jq6HRPfLLB7KcRiDMT",
+        tId,
         riderId,
         riderScore.lap,
         riderScore.score
