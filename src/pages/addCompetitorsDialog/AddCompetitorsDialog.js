@@ -42,6 +42,29 @@ export default function AddCompetitorDialog({ open, onClose }) {
     ],
   });
 
+  const resetForm = () => {
+    setCompetitorData({
+      name: "",
+      id: "",
+      number: "",
+      age: "",
+      city: "",
+      club: "",
+      eps: "",
+      numberPersonInCharge: "",
+      socialNetworks: "",
+      score: [
+        {
+          firstScore: 0,
+          secondScore: 0,
+          tirthScore: 0,
+          finalScore: 0,
+        },
+      ],
+    });
+    setFormSubmitted(false); // Reinicia el estado de formSubmitted
+  };
+
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSave = async () => {
@@ -56,7 +79,10 @@ export default function AddCompetitorDialog({ open, onClose }) {
         window.alert(
           `El corredor: ${competitorData.name} ha sido inscrito, bienvenido al torneo!`
         );
-        setTimeout(navigate("/layout"), 1000);
+        setTimeout(() => {
+          resetForm(); // Llama a la función resetForm después de cerrar el diálogo
+          navigate("/layout");
+        }, 1000);
         onClose();
       } else {
         window.alert("ERROR");
@@ -77,6 +103,10 @@ export default function AddCompetitorDialog({ open, onClose }) {
     }));
   };
 
+  const handleClose = () => {
+    onClose();
+    resetForm();
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle className="addCompetitorsDialogTitle">
@@ -143,6 +173,15 @@ export default function AddCompetitorDialog({ open, onClose }) {
                   ? "invalidField"
                   : ""
                   }`}
+                inputProps={{
+                  type: "number",
+                  pattern: "[0-9]+",
+                  onKeyPress: (event) => {
+                    if (event.target.value.length >= 12) {
+                      event.preventDefault();
+                    }
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -163,6 +202,15 @@ export default function AddCompetitorDialog({ open, onClose }) {
                   ? "invalidField"
                   : ""
                   }`}
+                inputProps={{
+                  type: "number",
+                  pattern: "[0-9]+",
+                  onKeyPress: (event) => {
+                    if (event.target.value.length >= 2) {
+                      event.preventDefault();
+                    }
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -245,6 +293,15 @@ export default function AddCompetitorDialog({ open, onClose }) {
                   ? "invalidField"
                   : ""
                   }`}
+                inputProps={{
+                  type: "number",
+                  pattern: "[0-9]+",
+                  onKeyPress: (event) => {
+                    if (event.target.value.length >= 12) {
+                      event.preventDefault();
+                    }
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={12} lg={12}>
@@ -274,7 +331,7 @@ export default function AddCompetitorDialog({ open, onClose }) {
       {/* Botones */}
       <DialogActions className="addCompetitorsDialogButtonsContainer">
         <Button
-          onClick={onClose}
+          onClick={handleClose}
           color="primary"
           variant="contained"
           className="addCompetitorsDialogButtons"
