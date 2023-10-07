@@ -13,7 +13,8 @@ import image from '../../utils/images/Logo.png';
 import "./styles.css";
 import Sidebar from '../sidebar/Sidebar';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+//En caso de querer activar mas opciones para el perfil
+const settings = []; //['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar({ title }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

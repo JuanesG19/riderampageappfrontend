@@ -50,30 +50,30 @@ function SwipeableTextMobileStepper() {
           delay: 1000,
           disableOnInteraction: false,
         }}
-        modules={[Autoplay]}
+        //modules={[Autoplay]}
         className="mySwiper sliderBackground"
         breakpoints={{
           0: {
             slidesPerView: 2,
           },
           400: {
-            slidesPerView: 1,
-          },
-          639: {
             slidesPerView: 2,
           },
+          639: {
+            slidesPerView: 3,
+          },
           865: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           1000: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           1500: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           1700: {
-            slidesPerView: 4
-          }
+            slidesPerView: 4,
+          },
         }}
       >
         <SwiperSlide className="swiper-slide swiper">
