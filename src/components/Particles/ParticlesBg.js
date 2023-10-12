@@ -63,7 +63,7 @@ const ParticlesBg = () => {
               enable: true,
               area: 800,
             },
-            value: 90,
+            value: 70,
           },
           opacity: {
             value: 0.05,

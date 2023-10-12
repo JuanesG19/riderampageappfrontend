@@ -141,22 +141,15 @@ export const rateRider = async (tournamentId, riderId, lap, rate) => {
             updatedScore.firstScore = parseFloat(rate);
             break;
           case 2:
+            updatedScore.finalScore = Math.max(updatedScore.secondScore, parseFloat(rate));
             updatedScore.secondScore = parseFloat(rate);
-            console.log("secondScore");
-
             break;
           case 3:
+            updatedScore.finalScore = Math.max(updatedScore.tirthScore, parseFloat(rate));
             updatedScore.tirthScore = parseFloat(rate);
-            console.log("tirthScore");
             break;
           default:
         }
-
-        updatedScore.finalScore =
-          updatedScore.firstScore +
-          updatedScore.secondScore +
-          updatedScore.tirthScore;
-
         ridersData[riderIndex].score[0] = updatedScore;
 
         await updateDoc(tournamentRef, { riders: ridersData });
